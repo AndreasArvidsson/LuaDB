@@ -30,7 +30,6 @@ private:
 	LuaManager();
 	~LuaManager();
 
-	void addLuaPath(lua_State* L, const char *path);
 	LuaDB* getDatabase(const String name);
 	lua_State* createNewState();
 	void printError(lua_State *L);

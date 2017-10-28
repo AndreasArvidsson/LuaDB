@@ -48,9 +48,14 @@ void LuaManager::setIsRunning(const bool isRunning) {
 }
 
 void LuaManager::loadFile(const String &path) {
-	String str = FileIO::readFile(path);
-	if (str.size()) {
-		loadString(str.c_str());
+	String str;
+	if (FileIO::readFile(path, str)) {
+		if (str.size()) {
+			loadString(str.c_str());
+		}
+	}
+	else {
+		printf("Can't read from file '%s'", path.c_str());
 	}
 }
 
@@ -105,12 +110,14 @@ lua_State* LuaManager::createNewState()  {
 		LuaDB::lua_registerDB(L, _pDB);
 	}
 
-	//Add new path for scripts to load from
-	addLuaPath(L, "scripts/?.lua");
-
 	//Load lua lib files.
-	doLoadString(L, FileIO::readFile("scripts/Document.lua"));
-	doLoadString(L, FileIO::readFile("scripts/Array.lua"));
+	String str;
+	if (FileIO::readFile("scripts/Document.lua", str)) {
+		doLoadString(L, str);
+	}
+	if (FileIO::readFile("scripts/Array.lua", str)) {
+		doLoadString(L, str);
+	}
 
 	lua_pushstring(L, BSON_NAME_DOCUMENT);
 	lua_getglobal(L, BSON_NAME_DOCUMENT);
@@ -131,18 +138,6 @@ void LuaManager::doLoadString(lua_State *L, const String &str) {
 	if (lua_pcall(L, 0, LUA_MULTRET, 0)) {
 		printError(L);
 	}
-}
-
-void LuaManager::addLuaPath(lua_State* L, const char *path) {
-	lua_getglobal(L, "package");
-	lua_getfield(L, -1, "path");
-	String currentPath = lua_tostring(L, -1);
-	currentPath.append(";");
-	currentPath.append(path);
-	lua_pop(L, 1); 
-	lua_pushstring(L, currentPath.c_str());
-	lua_setfield(L, -2, "path");
-	lua_pop(L, 1); 
 }
 
 void LuaManager::printError(lua_State *L) {

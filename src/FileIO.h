@@ -3,6 +3,6 @@
 
 class FileIO {
 public:
-	static const String readFile(const String &path);
+	static const bool readFile(const String &path, String &result);
 
 };

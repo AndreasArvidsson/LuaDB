@@ -1,14 +1,16 @@
 #include "FileIO.h"
 #include <stdio.h>
 
-const String FileIO::readFile(const String &path) {
-	String str;
-	FILE * pFile;
-	pFile = fopen(path.c_str(), "r");
+const bool FileIO::readFile(const String &path, String &result) {
+	FILE *pFile = fopen(path.c_str(), "r");
+	if (!pFile) {
+		return false;
+	}
+	result = "";
 	char c;
 	while ((c= fgetc(pFile)) != EOF) {
-		str += c;
+		result += c;
 	}
 	fclose(pFile);
-	return str;
+	return true;
 }
