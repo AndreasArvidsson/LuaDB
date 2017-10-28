@@ -1,0 +1,42 @@
+
+auth
+uuid konstruktor
+uppdatera isodate med mer funtioner, negativa värden
+
+returnera errors som json istället för lua error
+skapa negativa tester
+
+multiline parsning i cli
+preparser
+"a.b" > ["a.b"] 
+a: 5 > a = 5
+{a = 5, b = c, __order = {a, b}}
+a += 4 > a = a + 4; 
+
+https://docs.mongodb.com/manual/reference/command/#database-commands
+https://github.com/mongodb/libbson/blob/a41f2d3873fc1b45e54fe1cc13c32719a768eb2b/src/bson/bson-iter.h
+https://github.com/mongodb/libbson/blob/a41f2d3873fc1b45e54fe1cc13c32719a768eb2b/src/bson/bson-iter.c
+https://github.com/mongodb/libbson/blob/a41f2d3873fc1b45e54fe1cc13c32719a768eb2b/src/bson/bson-types.h
+
+
+
+2milj doc
+JS mongo						6000-7000
+
+LUA
+hämta ifrån mongo till c		2150
+anropa lua func					2150
+loopa över iterator 			2750
+tables med int					5500
+tables med i-udata				7700
+tables med i-table				7500
+tables med i-udata/meta			8900
+tables med i-table/meta			8900
+tables med riktig data			9000
+dokument med riktig data		11000
+dokument light med riktig data	9100
+
+
+
+
+

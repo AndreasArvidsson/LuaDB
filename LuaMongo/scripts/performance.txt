@@ -1,0 +1,34 @@
+Size					100000 
+
+LUA
+Insert {}               4903    ms
+Insert table            7914    ms
+Insert table inline     8068    ms
+Insert document         8019    ms
+Insert doc inline       8690    ms
+InsertMany doc          707     ms
+Count                   192     ms
+Next                    1203    ms
+ForEach                 1178    ms
+Iterator                1169    ms
+toArray                 1484    ms
+Remove                  3648    ms
+Empty loop              22      ms
+Function call           22      ms
+
+JS
+Insert {}                19335 ms
+Insert document          24372 ms
+Insert doc inline        24742 ms
+InsertMany doc           3384 ms
+Count                    176 ms
+Next                     1673 ms
+ForEach                  1541 ms
+toArray                  1920 ms
+Remove                   3804 ms
+Empty loop               1594 ms
+Function call            2378 ms
+
+
+
+
