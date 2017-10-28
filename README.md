@@ -8,7 +8,7 @@ On large collections this takes a long time and JavaScript is a huge bottleneck 
 ## Why Lua?
 Pure and simple: with [LuaJIT](http://luajit.org/), Lua is the fastests scripting language available.     
 
-LuaJit is in most scenarios on par or at most a few percent behind pure C code. For a scripting language this is amazing.
+LuaJit is in most scenarios on par or at most a few percent behind pure C code. For a scripting language that is amazing.
 
 
 ## Setup
