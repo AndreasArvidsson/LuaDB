@@ -17,6 +17,7 @@ public:
 
 	void loadFile(const String &path);
 	void loadString(const String &str);
+	void addLuaPath(const char *path);
 
 private:
 	static LuaManager *_pInstance;
@@ -34,7 +35,7 @@ private:
 	lua_State* createNewState();
 	void printError(lua_State *L);
 	void doLoadString(lua_State *L, const String &str);
-
+	
 	static const luaL_reg _bindFuncs[];
 	
 	static int lua_help(lua_State *L);
@@ -47,7 +48,7 @@ private:
 	static int lua_showDatabases(lua_State *L);
 	static int lua_showCollections(lua_State *L);
 	static int lua_getDatabaseNames(lua_State *L);
-
+	
 	static int lua_cTest(lua_State *L);
 
 };

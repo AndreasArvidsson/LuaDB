@@ -66,6 +66,22 @@ void LuaManager::loadString(const String &str) {
 	doLoadString(_L, str);
 }
 
+void LuaManager::addLuaPath(const char *path) {
+	if (!_L) {
+		_L = createNewState();
+	}
+	lua_getglobal(_L, "package");
+	lua_getfield(_L, -1, "path");
+	String currentPath = lua_tostring(_L, -1);
+	currentPath.append(";");
+	currentPath.append(path);
+	lua_pop(_L, 1);
+	lua_pushstring(_L, currentPath.c_str());
+	lua_setfield(_L, -2, "path");
+	lua_pop(_L, 1);
+}
+
+
 /*************************************
 *************** PRIVATE **************
 **************************************/
@@ -112,10 +128,10 @@ lua_State* LuaManager::createNewState()  {
 
 	//Load lua lib files.
 	String str;
-	if (FileIO::readFile("scripts/Document.lua", str)) {
+	if (FileIO::readFile("lua/Document.lua", str)) {
 		doLoadString(L, str);
 	}
-	if (FileIO::readFile("scripts/Array.lua", str)) {
+	if (FileIO::readFile("lua/Array.lua", str)) {
 		doLoadString(L, str);
 	}
 
