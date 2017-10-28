@@ -1,5 +1,5 @@
 #include "LuaBsonTypes.h"
-#include "Mongo.hpp"
+#include "mongoc.h"
 #include "Date.h"
 #include "LuaParserUtil.h"
 #include "b64_pton.h"

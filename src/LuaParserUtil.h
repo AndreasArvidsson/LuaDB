@@ -1,6 +1,6 @@
 #pragma once
 #include "Lua.hpp"
-#include "Mongo.hpp"
+#include "mongoc.h"
 #include "String.h"
 
 class LuaParserUtil {
