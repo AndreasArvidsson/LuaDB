@@ -5,6 +5,9 @@
 #include "MongoManager.h"
 #include "LuaParserUtil.h"
 #include "LuaBsonTypes.h"
+#include "LuaDocument.h"
+#include "LuaArray.h"
+#include "LuaAssert.h"
 
 /*************************************
 *************** STATIC ***************
@@ -66,21 +69,6 @@ void LuaManager::loadString(const String &str) {
 	doLoadString(_L, str);
 }
 
-void LuaManager::addLuaPath(const char *path) {
-	if (!_L) {
-		_L = createNewState();
-	}
-	lua_getglobal(_L, "package");
-	lua_getfield(_L, -1, "path");
-	String currentPath = lua_tostring(_L, -1);
-	currentPath.append(";");
-	currentPath.append(path);
-	lua_pop(_L, 1);
-	lua_pushstring(_L, currentPath.c_str());
-	lua_setfield(_L, -2, "path");
-	lua_pop(_L, 1);
-}
-
 
 /*************************************
 *************** PRIVATE **************
@@ -126,22 +114,20 @@ lua_State* LuaManager::createNewState()  {
 		LuaDB::lua_registerDB(L, _pDB);
 	}
 
-	//Load lua lib files.
-	String str;
-	if (FileIO::readFile("../src/lua/Document.lua", str)) {
-		doLoadString(L, str);
-	}
-	if (FileIO::readFile("../src/lua/Array.lua", str)) {
-		doLoadString(L, str);
-	}
 
+
+	//Load lua lib files.
+	doLoadString(L, LuaDocument);
 	lua_pushstring(L, BSON_NAME_DOCUMENT);
 	lua_getglobal(L, BSON_NAME_DOCUMENT);
 	lua_settable(L, LUA_REGISTRYINDEX);
 
+	doLoadString(L, LuaArray);
 	lua_pushstring(L, BSON_NAME_ARRAY);
 	lua_getglobal(L, BSON_NAME_ARRAY);
 	lua_settable(L, LUA_REGISTRYINDEX);
+
+	doLoadString(L, LuaAssert);
 
 	return L;
 }
@@ -272,17 +258,7 @@ int LuaManager::lua_showCollections(lua_State *L) {
 	return 0;
 }
 
-const int bson_iter_size(bson_iter_t *it) {
-	bson_iter_t itCopy = *it;
-	int size = 0;
-	while (bson_iter_next(&itCopy)) {
-		++size;
-	}
-	return size;
-}
-
 int LuaManager::lua_cTest(lua_State *L) {
-
 	time_t t1;
 	int size = 100000000;
 	//size = 1;

@@ -40,10 +40,11 @@ int run(int argc, char* argv[]) {
 		pLua->useDatabase(args.database);
 	}
 
-	//Add new path for scripts to load from
-	pLua->addLuaPath("../test/?.lua");
+
+	pLua->loadFile("../test/test_bsonTypes.lua");
+	pLua->loadFile("../test/test_crud.lua");
 	//pLua->loadFile("../test/performance.lua");
-	pLua->loadFile("../test/test.lua");
+	
 
 	if (args.files.size()) {
 		for (int i = 0; i < args.files.size(); ++i) {

@@ -17,7 +17,6 @@ public:
 
 	void loadFile(const String &path);
 	void loadString(const String &str);
-	void addLuaPath(const char *path);
 
 private:
 	static LuaManager *_pInstance;

@@ -9,6 +9,7 @@ end
 --db.test:remove() printjson(db.test:createTestData(1))
 --printjson(db.test:findOne(), true);
 
+--[[
 local size = 1000000
 local docs = {};
 
@@ -35,7 +36,7 @@ for i=1, size do
 docs[i]:delete("k")
 end
 print("delete", (time() - t1), "ms");
-
+]]
 
 --find()
 --cTest()
