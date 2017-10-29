@@ -114,9 +114,7 @@ lua_State* LuaManager::createNewState()  {
 		LuaDB::lua_registerDB(L, _pDB);
 	}
 
-
-
-	//Load lua lib files.
+	//Load libs written i lua code
 	doLoadString(L, LuaDocument);
 	lua_pushstring(L, BSON_NAME_DOCUMENT);
 	lua_getglobal(L, BSON_NAME_DOCUMENT);
