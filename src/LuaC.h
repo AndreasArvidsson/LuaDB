@@ -1,10 +1,8 @@
 #pragma once
-
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
 #include "luajit.h"
-#pragma comment(lib,"lua51.lib")
 
 #if LUA_VERSION_NUM == 501
 #define lua_setFuncs(L, list) luaL_register(L, NULL, list)

@@ -1,9 +1,5 @@
 #pragma once
 #include "MongoDB.h"
-#include "mongoc.h"
-
-#pragma comment(lib,"mongoc.lib")
-#pragma comment(lib,"bson.lib")
 
 class MongoManager {
 public:

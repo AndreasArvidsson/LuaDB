@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\Main.cpp" />
+    <ClCompile Include="..\src\LuaBsonTypes.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaC.c">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaCollection.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaCursor.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaDB.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaManager.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\LuaParserUtil.cpp">
+      <Filter>lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MongoCollection.cpp">
+      <Filter>mongo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MongoDB.cpp">
+      <Filter>mongo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MongoManager.cpp">
+      <Filter>mongo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CliArgs.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Date.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\FileIO.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Log.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MemoryManager.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\LuaParserUtil.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaBsonTypes.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaC.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaCollection.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaCursor.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaDB.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaManager.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MongoManager.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MongoCollection.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MongoDB.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\String.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CliArgs.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Date.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\FileIO.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Log.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Map.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MemoryManager.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaDocument.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaArray.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\LuaAssert.h">
+      <Filter>lua</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="lua">
+      <UniqueIdentifier>{cc8047f2-da7b-49b6-a61a-531436679950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mongo">
+      <UniqueIdentifier>{694f5d79-6f47-499c-957d-a6a09a47e376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{cf9bce0c-75fe-463b-9972-6270bde7e137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{edd05e85-9e87-4cf8-9b84-5da077e44193}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\todo.txt" />
+    <Text Include="..\test\performance.txt">
+      <Filter>test</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\test\performance.js">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\performance.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_bsonTypes.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_crud.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test1.lua">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\tmp.js">
+      <Filter>test</Filter>
+    </None>
+  </ItemGroup>
+</Project>

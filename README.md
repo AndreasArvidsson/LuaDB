@@ -17,12 +17,10 @@ LuaJIT is in most scenarios on par or at most a few percent behind pure C code. 
 * [MongoDB C Driver](http://mongoc.org/)
 
 **Include directories**
-* $(ProjectRoot)/lib/bson
-* $(ProjectRoot)/lib/mongoc
-* $(ProjectRoot)/lib/luajit
-* $(ProjectRoot)/lib/libbson
+* $(ProjectRoot)/include
 
 **Linker library directories**
-* $(ProjectRoot)/lib/bson
+* $(ProjectRoot)/lib/lua51
 * $(ProjectRoot)/lib/mongoc
-* $(ProjectRoot)/lib/luajit
+* $(ProjectRoot)/lib/bson
+

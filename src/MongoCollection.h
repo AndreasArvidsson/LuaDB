@@ -1,7 +1,6 @@
 #pragma once
 #include "mongoc.h"
 #include "String.h"
-#include <vector>
 
 class MongoDB;
 class MongoWriteResult;
