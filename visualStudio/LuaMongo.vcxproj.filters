@@ -125,7 +125,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\todo.txt" />
     <Text Include="..\test\performance.txt">
       <Filter>test</Filter>
     </Text>
