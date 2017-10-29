@@ -1,6 +1,2 @@
-.vs
-*.sln
-x64
-*/*.vcxproj*
-**/Debug
+visualStudio
 todo.*

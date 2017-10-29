@@ -128,10 +128,10 @@ lua_State* LuaManager::createNewState()  {
 
 	//Load lua lib files.
 	String str;
-	if (FileIO::readFile("lua/Document.lua", str)) {
+	if (FileIO::readFile("../src/lua/Document.lua", str)) {
 		doLoadString(L, str);
 	}
-	if (FileIO::readFile("lua/Array.lua", str)) {
+	if (FileIO::readFile("../src/lua/Array.lua", str)) {
 		doLoadString(L, str);
 	}
 
