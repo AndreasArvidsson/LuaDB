@@ -1,7 +1,9 @@
 #pragma once
-#include "Log.h"
 
-#ifdef DEBUG
+#define DEBUG_MEMORY
+
+#ifdef DEBUG_MEMORY
+#include "Log.h"
 
 #include "Map.h"
 
