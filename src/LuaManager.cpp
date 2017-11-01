@@ -1,6 +1,6 @@
 #include "LuaManager.h"
 #include <limits.h>
-#include "FileIO.h"
+#include "File.h"
 #include "Date.h"
 #include "MongoManager.h"
 #include "LuaParserUtil.h"
@@ -52,13 +52,19 @@ void LuaManager::setIsRunning(const bool isRunning) {
 
 void LuaManager::loadFile(const String &path) {
 	String str;
-	if (FileIO::readFile(path, str)) {
-		if (str.size()) {
-			loadString(str.c_str());
+	File file(path);
+	if (file.exists()) {
+		if (file.getData(&str)) {
+			if (str.size()) {
+				loadString(str.c_str());
+			}
+		}
+		else {
+			printf("Error: Can't read from file '%s'", path.c_str());
 		}
 	}
 	else {
-		printf("Can't read from file '%s'", path.c_str());
+		printf("Error: File '%s' doesn't exist", path.c_str());
 	}
 }
 
@@ -257,77 +263,77 @@ int LuaManager::lua_showCollections(lua_State *L) {
 }
 
 int LuaManager::lua_cTest(lua_State *L) {
-	time_t t1;
-	int size = 100000000;
-	//size = 1;
+	//time_t t1;
+	//int size = 100000000;
+	////size = 1;
 
-	const uint8_t raw[5] = { 'a', 'b','c',1,5 };
-	bson_oid_t oid;
-	bson_t *scope = BCON_NEW("name", "myScope");
-	bson_oid_init(&oid, NULL);
-	bson_t *bson = BCON_NEW(
-		"double", BCON_DOUBLE(123.4),
-		"utf8", "this is my string",
-		"document", BCON_DOCUMENT(scope),
-		"array", "[", "a", BCON_BOOL(false), BCON_DOUBLE(5), "]",
-		"binary", BCON_BIN(BSON_SUBTYPE_FUNCTION, raw, sizeof raw),
-		"undefined", BCON_UNDEFINED,
-		"oid", BCON_OID(&oid),
-		"bool", BCON_BOOL(true),
-		"datetime", BCON_DATE_TIME(12345678),
-		"null", BCON_NULL,
-		"regex", BCON_REGEX("^hello", "i"),
-		"codewscope", BCON_CODEWSCOPE("var a = 1;", scope),
-		"dbpointer", BCON_DBPOINTER("test.test", &oid),
-		"code", BCON_CODE("var a = function() {}"),
-		"symbol", BCON_SYMBOL("my_symbol"),
-		"int32", BCON_INT32(1234),
-		"timestamp", BCON_TIMESTAMP(1234, 4567),
-		"int64", BCON_INT64(4321),
-		"maxkey", BCON_MAXKEY,
-		"minkey", BCON_MINKEY
-	);
-	bson_iter_t it;
-	bson_iter_init(&it, bson);
-	bson_iter_next(&it);
+	//const uint8_t raw[5] = { 'a', 'b','c',1,5 };
+	//bson_oid_t oid;
+	//bson_t *scope = BCON_NEW("name", "myScope");
+	//bson_oid_init(&oid, NULL);
+	//bson_t *bson = BCON_NEW(
+	//	"double", BCON_DOUBLE(123.4),
+	//	"utf8", "this is my string",
+	//	"document", BCON_DOCUMENT(scope),
+	//	"array", "[", "a", BCON_BOOL(false), BCON_DOUBLE(5), "]",
+	//	"binary", BCON_BIN(BSON_SUBTYPE_FUNCTION, raw, sizeof raw),
+	//	"undefined", BCON_UNDEFINED,
+	//	"oid", BCON_OID(&oid),
+	//	"bool", BCON_BOOL(true),
+	//	"datetime", BCON_DATE_TIME(12345678),
+	//	"null", BCON_NULL,
+	//	"regex", BCON_REGEX("^hello", "i"),
+	//	"codewscope", BCON_CODEWSCOPE("var a = 1;", scope),
+	//	"dbpointer", BCON_DBPOINTER("test.test", &oid),
+	//	"code", BCON_CODE("var a = function() {}"),
+	//	"symbol", BCON_SYMBOL("my_symbol"),
+	//	"int32", BCON_INT32(1234),
+	//	"timestamp", BCON_TIMESTAMP(1234, 4567),
+	//	"int64", BCON_INT64(4321),
+	//	"maxkey", BCON_MAXKEY,
+	//	"minkey", BCON_MINKEY
+	//);
+	//bson_iter_t it;
+	//bson_iter_init(&it, bson);
+	//bson_iter_next(&it);
 
-	t1 = Date::getCurrentTimeMillis();
-	for (int i = 0; i < size; ++i) {
-		lua_createtable(L, 1, 0);
-		lua_pushinteger(L, 666);
-		lua_pushinteger(L, 1);	
-		lua_rawset(L, -3);
-		lua_pop(L, 1);
-	}
-	printf("1 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
+	//t1 = Date::getCurrentTimeMillis();
+	//for (int i = 0; i < size; ++i) {
+	//	lua_createtable(L, 1, 0);
+	//	lua_pushinteger(L, 666);
+	//	lua_pushinteger(L, 1);	
+	//	lua_rawset(L, -3);
+	//	lua_pop(L, 1);
+	//}
+	//printf("1 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
 
-	t1 = Date::getCurrentTimeMillis();
-	for (int i = 0; i < size; ++i) {
-		lua_createtable(L, 1, 0);
-		lua_pushinteger(L, 666);
-		lua_rawseti(L, -2, 1);
-		lua_pop(L, 1);
-	}
-	printf("2 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
+	//t1 = Date::getCurrentTimeMillis();
+	//for (int i = 0; i < size; ++i) {
+	//	lua_createtable(L, 1, 0);
+	//	lua_pushinteger(L, 666);
+	//	lua_rawseti(L, -2, 1);
+	//	lua_pop(L, 1);
+	//}
+	//printf("2 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
 
-	lua_createtable(L, 1, 0);
-	lua_pushinteger(L, 666);
-	lua_rawseti(L, -2, 1);
+	//lua_createtable(L, 1, 0);
+	//lua_pushinteger(L, 666);
+	//lua_rawseti(L, -2, 1);
 
-	t1 = Date::getCurrentTimeMillis();
-	for (int i = 0; i < size; ++i) {
-		lua_pushinteger(L, 1);
-		lua_rawget(L, -2);
-		lua_pop(L, 1);
-	}
-	printf("3 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
+	//t1 = Date::getCurrentTimeMillis();
+	//for (int i = 0; i < size; ++i) {
+	//	lua_pushinteger(L, 1);
+	//	lua_rawget(L, -2);
+	//	lua_pop(L, 1);
+	//}
+	//printf("3 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
 
-	t1 = Date::getCurrentTimeMillis();
-	for (int i = 0; i < size; ++i) {
-		lua_rawgeti(L, -1, 1);
-		lua_pop(L, 1);
-	}
-	printf("4 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
+	//t1 = Date::getCurrentTimeMillis();
+	//for (int i = 0; i < size; ++i) {
+	//	lua_rawgeti(L, -1, 1);
+	//	lua_pop(L, 1);
+	//}
+	//printf("4 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
 
 
 	//t1 = Date::getCurrentTimeMillis();
@@ -351,6 +357,8 @@ int LuaManager::lua_cTest(lua_State *L) {
 	//}
 	//printf("6 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
 
-	return 0;
+	int *p = new int(666);
+	lua_pushlightuserdata(L, p);
+	return 1;
 }
 
