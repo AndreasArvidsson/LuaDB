@@ -132,7 +132,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\CliArgs.cpp" />
     <ClCompile Include="..\src\Date.cpp" />
-    <ClCompile Include="..\src\FileIO.cpp" />
+    <ClCompile Include="..\src\File.cpp" />
     <ClCompile Include="..\src\Log.cpp" />
     <ClCompile Include="..\src\LuaBsonTypes.cpp" />
     <ClCompile Include="..\src\LuaC.c" />
@@ -150,7 +150,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\CliArgs.h" />
     <ClInclude Include="..\src\Date.h" />
-    <ClInclude Include="..\src\FileIO.h" />
+    <ClInclude Include="..\src\File.h" />
     <ClInclude Include="..\src\Log.h" />
     <ClInclude Include="..\src\LuaArray.h" />
     <ClInclude Include="..\src\LuaAssert.h" />

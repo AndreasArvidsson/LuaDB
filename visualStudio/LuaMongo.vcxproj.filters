@@ -38,13 +38,13 @@
     <ClCompile Include="..\src\Date.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\FileIO.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Log.cpp">
       <Filter>util</Filter>
     </ClCompile>
     <ClCompile Include="..\src\MemoryManager.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\File.cpp">
       <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -88,9 +88,6 @@
     <ClInclude Include="..\src\Date.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\FileIO.h">
-      <Filter>util</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Log.h">
       <Filter>util</Filter>
     </ClInclude>
@@ -108,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="..\src\LuaAssert.h">
       <Filter>lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\File.h">
+      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
