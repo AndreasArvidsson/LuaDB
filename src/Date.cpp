@@ -9,9 +9,6 @@ const time_t Date::getCurrentTimeMillis() {
 	return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
 }
 
-#include <ctime>
-
-
 const String Date::toIsoString(time_t timestamp) {
 	//strftime can only handle seconds.
 	time_t tSec = timestamp / 1000;
