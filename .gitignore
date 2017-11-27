@@ -1,6 +1,6 @@
-todo.*
 visualStudio/x64
 visualStudio/.vs
+netbeans/build/
+netbeans/dist/
 test/tmp*
-/netbeans/build/
-/netbeans/dist/
+todo.*
