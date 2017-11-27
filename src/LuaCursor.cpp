@@ -61,7 +61,7 @@ int LuaCursor::lua_toString(lua_State *L) {
 	//MongoCLI ex: 'DBQuery: gss.test1 -> { "a" : 2 }'
 	LuaCursor *pCursor = lua_get(L, 1);
 	char buf[128];
-	size_t length = sprintf_s(buf, 128, "DBQuery: %s", pCursor->_pMongoCollection->getFullName().c_str());
+	size_t length = snprintf(buf, 128, "DBQuery: %s", pCursor->_pMongoCollection->getFullName().c_str());
 	lua_pushlstring(L, buf, length);
 	return 1;
 }

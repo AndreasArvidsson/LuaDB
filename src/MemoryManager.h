@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEBUG_MEMORY
+//#define DEBUG_MEMORY
 
 #ifdef DEBUG_MEMORY
 #include "Log.h"

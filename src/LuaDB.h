@@ -19,9 +19,9 @@ private:
 	MongoDB *_pMongoDB;
 	std::unordered_map<String, LuaCollection*> _collections;
 
-	static LuaDB* LuaDB::lua_get(lua_State *L, int index);
+	static LuaDB* lua_get(lua_State *L, int index);
 
-	static const luaL_reg LuaDB::_bindFuncs[];
+	static const luaL_reg _bindFuncs[];
 	static int lua_index(lua_State *L);
 	static int lua_help(lua_State *L);
 	static int lua_getName(lua_State *L);

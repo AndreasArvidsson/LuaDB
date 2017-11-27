@@ -259,7 +259,7 @@ void LuaParserUtil::luaToJson(lua_State *L, String &jsonOut, const int index, co
 				break;
 			case LUA_TNUMBER: {
 				char buf[24];
-				sprintf_s(buf, 24, "%g", lua_tonumber(L, index));
+				snprintf(buf, 24, "%g", lua_tonumber(L, index));
 				jsonOut += buf;
 				break;
 			}

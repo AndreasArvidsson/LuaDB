@@ -8,7 +8,7 @@
 
 String MongoManager::getUri(const String host, const int port) {
 	char uri[BUFFER_SIZE];
-	sprintf_s(uri, BUFFER_SIZE, "mongodb://%s:%d", host.c_str(), port);
+	snprintf(uri, BUFFER_SIZE, "mongodb://%s:%d", host.c_str(), port);
 	return uri;
 }
 

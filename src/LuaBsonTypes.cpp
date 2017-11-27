@@ -4,6 +4,7 @@
 #include "LuaParserUtil.h"
 #include "libbson_b64_pton.h"
 #include <regex>
+#include <cmath>
 
 #define BUFFER_SIZE 128
 #define OID_STR_SIZE 24
@@ -182,7 +183,7 @@ int LuaBsonTypes::lua_objectIdToString(lua_State *L) {
 	char oidStr[OID_STR_SIZE + 1];
 	bson_oid_to_string(pOid, oidStr);
 	char buf[37];
-	sprintf_s(buf, 37, "%s(\"%s\")", BSON_NAME_OID, oidStr);
+	snprintf(buf, 37, "%s(\"%s\")", BSON_NAME_OID, oidStr);
 	lua_pushlstring(L, buf, 36);
 	return 1;
 }
@@ -226,14 +227,14 @@ const int32_t LuaBsonTypes::lua_readNumberInt(lua_State *L, const int index) {
 
 int LuaBsonTypes::lua_numberIntToString(lua_State *L) {
 	char buf[BUFFER_SIZE];
-	int length = sprintf_s(buf, BUFFER_SIZE, "%s(%d)", BSON_NAME_INT32, lua_readNumberInt(L, 1));
+	int length = snprintf(buf, BUFFER_SIZE, "%s(%d)", BSON_NAME_INT32, lua_readNumberInt(L, 1));
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
 
 int LuaBsonTypes::lua_numberIntConcat(lua_State *L) {
 	char buf[BUFFER_SIZE];
-	int length = sprintf_s(buf, BUFFER_SIZE, "%s%d", lua_tostring(L, 1), lua_readNumberInt(L, 2));
+	int length = snprintf(buf, BUFFER_SIZE, "%s%d", lua_tostring(L, 1), lua_readNumberInt(L, 2));
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -264,12 +265,12 @@ int LuaBsonTypes::lua_numberIntDiv(lua_State *L) {
 }
 
 int LuaBsonTypes::lua_numberIntMod(lua_State *L) {
-	lua_pushnumber(L, fmod(lua_readNumberInt(L, 1), lua_tonumber(L, 2)));
+	lua_pushnumber(L, std::fmod(lua_readNumberInt(L, 1), lua_tonumber(L, 2)));
 	return 1;
 }
 
 int LuaBsonTypes::lua_numberIntPow(lua_State *L) {
-	lua_pushnumber(L, pow(lua_readNumberInt(L, 1), lua_tonumber(L, 2)));
+	lua_pushnumber(L, std::pow(lua_readNumberInt(L, 1), lua_tonumber(L, 2)));
 	return 1;
 }
 
@@ -330,10 +331,10 @@ int LuaBsonTypes::lua_numberLongToString(lua_State *L) {
 	char buf[BUFFER_SIZE];
 	int length;
 	if (abs(value) > INT_MAX) {
-		length = sprintf_s(buf, BUFFER_SIZE, "%s(\"%lld\")", BSON_NAME_INT64, value);
+		length = snprintf(buf, BUFFER_SIZE, "%s(\"%ld\")", BSON_NAME_INT64, value);
 	}
 	else {
-		length = sprintf_s(buf, BUFFER_SIZE, "%s(%lld)", BSON_NAME_INT64, value);
+		length = snprintf(buf, BUFFER_SIZE, "%s(%ld)", BSON_NAME_INT64, value);
 	}
 	lua_pushlstring(L, buf, length);
 	return 1;
@@ -341,7 +342,7 @@ int LuaBsonTypes::lua_numberLongToString(lua_State *L) {
 
 int LuaBsonTypes::lua_numberLongConcat(lua_State *L) {
 	char buf[BUFFER_SIZE];
-	int length = sprintf_s(buf, BUFFER_SIZE, "%s%lld", lua_tostring(L, 1), lua_readNumberLong(L, 2));
+	int length = snprintf(buf, BUFFER_SIZE, "%s%ld", lua_tostring(L, 1), lua_readNumberLong(L, 2));
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -413,7 +414,7 @@ int LuaBsonTypes::lua_numberDecimalToString(lua_State *L) {
 	char decStr[BSON_DECIMAL128_STRING];
 	bson_decimal128_to_string(pValue, decStr);
 	char buf[BUFFER_SIZE];
-	int length = sprintf_s(buf, BUFFER_SIZE, "%s(\"%s\")", BSON_NAME_DECIMAL128, decStr);
+	int length = snprintf(buf, BUFFER_SIZE, "%s(\"%s\")", BSON_NAME_DECIMAL128, decStr);
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -462,7 +463,7 @@ int LuaBsonTypes::lua_isoDateToString(lua_State *L) {
 	time_t value = lua_readIsoDate(L, 1);
 	String isoString = Date::toIsoString(value);
 	char buf[BUFFER_SIZE];
-	size_t length = sprintf_s(buf, BUFFER_SIZE, "%s(\"%s\")", BSON_NAME_DATE_TIME, isoString.c_str());
+	size_t length = snprintf(buf, BUFFER_SIZE, "%s(\"%s\")", BSON_NAME_DATE_TIME, isoString.c_str());
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -490,7 +491,7 @@ int LuaBsonTypes::lua_timestampToString(lua_State *L) {
 	uint32_t timestamp, increment;
 	lua_readTimestamp(L, 1, &timestamp, &increment);
 	char buf[BUFFER_SIZE];
-	size_t length = sprintf_s(buf, BUFFER_SIZE, "%s(%d, %d)", BSON_NAME_TIMESTAMP, timestamp, increment);
+	size_t length = snprintf(buf, BUFFER_SIZE, "%s(%d, %d)", BSON_NAME_TIMESTAMP, timestamp, increment);
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -563,7 +564,7 @@ int LuaBsonTypes::lua_regExpToString(lua_State *L) {
 	const char *pRegexp, *pOptions;
 	lua_readRegexp(L, 1, &pRegexp, &pOptions);
 	char buf[BUFFER_SIZE];
-	size_t length = sprintf_s(buf, BUFFER_SIZE, "/%s/%s", pRegexp, pOptions);
+	size_t length = snprintf(buf, BUFFER_SIZE, "/%s/%s", pRegexp, pOptions);
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -660,19 +661,19 @@ int LuaBsonTypes::lua_binaryToString(lua_State *L) {
 	char *b64 = (char *)bson_malloc0(b64Length);
 	b64_ntop(pBinary, binaryLength, b64, b64Length);
 	size_t stringLength;
-	stringLength = sprintf_s(buf, BUFFER_SIZE, "%s(%d, \"%s\")", BSON_NAME_BINARY, subType, b64);
+	stringLength = snprintf(buf, BUFFER_SIZE, "%s(%d, \"%s\")", BSON_NAME_BINARY, subType, b64);
 	bson_free(b64);
 	lua_pushlstring(L, buf, stringLength);
 	return 1;
 	//switch (subType) {
 	////case BSON_SUBTYPE_UUID_DEPRECATED:
-	////	stringLength = sprintf_s(buf, BUFFER_SIZE, "LUUID(\"%s\")", b64);
+	////	stringLength = snprintf(buf, BUFFER_SIZE, "LUUID(\"%s\")", b64);
 	////	break;
 	////case BSON_SUBTYPE_UUID:
-	////	stringLength = sprintf_s(buf, BUFFER_SIZE, "UUID(\"%s\")", b64);
+	////	stringLength = snprintf(buf, BUFFER_SIZE, "UUID(\"%s\")", b64);
 	////	break;
 	//default:
-	//	stringLength = sprintf_s(buf, BUFFER_SIZE, "%s(%d, \"%s\")", BSON_NAME_BINARY, subType, b64);
+	//	stringLength = snprintf(buf, BUFFER_SIZE, "%s(%d, \"%s\")", BSON_NAME_BINARY, subType, b64);
 	//}
 }
 
@@ -725,7 +726,7 @@ int LuaBsonTypes::lua_dbPointerToString(lua_State *L) {
 	char oidStr[OID_STR_SIZE + 1];
 	bson_oid_to_string(pOid, oidStr);
 	char buf[BUFFER_SIZE];
-	size_t length = sprintf_s(buf, BUFFER_SIZE, "%s(\"%s\", %s(\"%s\"))", BSON_NAME_DBPOINTER, pCollection, BSON_NAME_OID, oidStr);
+	size_t length = snprintf(buf, BUFFER_SIZE, "%s(\"%s\", %s(\"%s\"))", BSON_NAME_DBPOINTER, pCollection, BSON_NAME_OID, oidStr);
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
@@ -821,7 +822,7 @@ int LuaBsonTypes::lua_writeResultToString(lua_State *L) {
 	String json;
 	LuaParserUtil::luaToJson(L, json, 1);
 	char buf[BUFFER_SIZE];
-	size_t length = sprintf_s(buf, BUFFER_SIZE, "%s(%s)", BSON_NAME_WRITE_RESULT, json.c_str());
+	size_t length = snprintf(buf, BUFFER_SIZE, "%s(%s)", BSON_NAME_WRITE_RESULT, json.c_str());
 	lua_pushlstring(L, buf, length);
 	return 1;
 }

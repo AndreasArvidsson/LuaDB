@@ -3,7 +3,7 @@
 #include "MongoManager.h"
 #include "CliArgs.h"
 #include <iostream> //getline
-#include <conio.h> //_kbhit
+//#include <conio.h> //_kbhit
 
 #define LUA_DB_VERSION "0.1.0.0"
 
@@ -57,25 +57,25 @@ int run(int argc, char* argv[]) {
 		pLua->setIsRunning(args.shell);
 	}
 
-	if (pLua->isRunning()) {
-		printf("Type \"help()\" for help\n");
-		while (pLua->isRunning()) {
-			printf("> ");
-			String commandStr;
-			String inputStr;
-			if (std::getline(std::cin, inputStr)) {
-				commandStr += inputStr;
-				while (_kbhit()) {
-					printf("... ");
-					std::getline(std::cin, inputStr);
-					commandStr += inputStr + "\n";
-				}
-			}
-			if (!commandStr.empty()) {
-				pLua->loadString(commandStr.c_str());
-			}
-		}
-	}
+//	if (pLua->isRunning()) {
+//		printf("Type \"help()\" for help\n");
+//		while (pLua->isRunning()) {
+//			printf("> ");
+//			String commandStr;
+//			String inputStr;
+//			if (std::getline(std::cin, inputStr)) {
+//				commandStr += inputStr;
+//				while (_kbhit()) {
+//					printf("... ");
+//					std::getline(std::cin, inputStr);
+//					commandStr += inputStr + "\n";
+//				}
+//			}
+//			if (!commandStr.empty()) {
+//				pLua->loadString(commandStr.c_str());
+//			}
+//		}
+//	}
 
 	return 0;
 }
