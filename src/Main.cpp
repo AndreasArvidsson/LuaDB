@@ -57,25 +57,25 @@ int run(int argc, char* argv[]) {
 		pLua->setIsRunning(args.shell);
 	}
 
-//	if (pLua->isRunning()) {
-//		printf("Type \"help()\" for help\n");
-//		while (pLua->isRunning()) {
-//			printf("> ");
-//			String commandStr;
-//			String inputStr;
-//			if (std::getline(std::cin, inputStr)) {
-//				commandStr += inputStr;
+	if (pLua->isRunning()) {
+		printf("Type \"help()\" for help\n");
+		while (pLua->isRunning()) {
+			printf("> ");
+			String commandStr;
+			String inputStr;
+			if (std::getline(std::cin, inputStr)) {
+				commandStr += inputStr;
 //				while (_kbhit()) {
 //					printf("... ");
 //					std::getline(std::cin, inputStr);
 //					commandStr += inputStr + "\n";
 //				}
-//			}
-//			if (!commandStr.empty()) {
-//				pLua->loadString(commandStr.c_str());
-//			}
-//		}
-//	}
+			}
+			if (!commandStr.empty()) {
+				pLua->loadString(commandStr.c_str());
+			}
+		}
+	}
 
 	return 0;
 }
