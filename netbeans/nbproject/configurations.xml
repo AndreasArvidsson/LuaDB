@@ -199,6 +199,7 @@
           <incDir>
             <pElem>../include</pElem>
           </incDir>
+          <commandLine>-std=c++17</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
