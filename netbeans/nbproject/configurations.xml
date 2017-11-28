@@ -83,6 +83,7 @@
           <commandLine>-std=c++17</commandLine>
         </ccTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin</output>
           <linkerLibItems>
             <linkerLibFileItem>../lib/bson.so</linkerLibFileItem>
             <linkerLibFileItem>../lib/lua51.so</linkerLibFileItem>
@@ -206,6 +207,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin</output>
           <linkerLibItems>
             <linkerLibFileItem>../lib/bson.so</linkerLibFileItem>
             <linkerLibFileItem>../lib/lua51.so</linkerLibFileItem>

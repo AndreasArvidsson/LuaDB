@@ -71,19 +71,19 @@ LDLIBSOPTIONS=../lib/bson.so ../lib/lua51.so ../lib/mongoc.so ../lib/snappy.so
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans: ../lib/bson.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/bson.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans: ../lib/lua51.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/lua51.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans: ../lib/mongoc.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/mongoc.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans: ../lib/snappy.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/snappy.so
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/_ext/511e4115/CliArgs.o: ../src/CliArgs.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/511e4115
@@ -172,7 +172,7 @@ ${OBJECTDIR}/_ext/511e4115/MongoManager.o: ../src/MongoManager.cpp
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
 	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mongoc.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/bson.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lua51.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/snappy.so
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/netbeans
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin
 
 # Subprojects
 .clean-subprojects:
