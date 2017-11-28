@@ -60,11 +60,11 @@ void LuaManager::loadFile(const String &path) {
 			}
 		}
 		else {
-			printf("Error: Can't read from file '%s'", path.c_str());
+			printf("Error: Can't read from file '%s'\n", path.c_str());
 		}
 	}
 	else {
-		printf("Error: File '%s' doesn't exist", path.c_str());
+		printf("Error: File '%s' doesn't exist\n", path.c_str());
 	}
 }
 
