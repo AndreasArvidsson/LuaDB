@@ -41,8 +41,8 @@ int run(int argc, char* argv[]) {
 	}
 
 
-	pLua->loadFile("../test/test_bsonTypes.lua");
-	pLua->loadFile("../test/test_crud.lua");
+//	pLua->loadFile("../test/test_bsonTypes.lua");
+//	pLua->loadFile("../test/test_crud.lua");
 	//pLua->loadFile("../test/performance.lua");
 	
 
