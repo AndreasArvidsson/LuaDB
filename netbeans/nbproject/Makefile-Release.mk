@@ -67,23 +67,23 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../lib/bson.so ../lib/lua51.so ../lib/mongoc.so ../lib/snappy.so
+LDLIBSOPTIONS=../lib/libbson-1.0.so.0 ../lib/libluajit-5.1.so.2 ../lib/libmongoc-1.0.so.0 ../lib/libsnappy.so.0
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/luaMongo.bin
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/bson.so
+${CND_DISTDIR}/luaMongo.bin: ../lib/libbson-1.0.so.0
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/lua51.so
+${CND_DISTDIR}/luaMongo.bin: ../lib/libluajit-5.1.so.2
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/mongoc.so
+${CND_DISTDIR}/luaMongo.bin: ../lib/libmongoc-1.0.so.0
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ../lib/snappy.so
+${CND_DISTDIR}/luaMongo.bin: ../lib/libsnappy.so.0
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin ${OBJECTFILES} ${LDLIBSOPTIONS}
+${CND_DISTDIR}/luaMongo.bin: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}
+	${LINK.cc} -o ${CND_DISTDIR}/luaMongo.bin ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/_ext/511e4115/CliArgs.o: ../src/CliArgs.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/511e4115
@@ -171,8 +171,8 @@ ${OBJECTDIR}/_ext/511e4115/MongoManager.o: ../src/MongoManager.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mongoc.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/bson.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lua51.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/snappy.so
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin
+	${RM} -r ${CND_DISTDIR}/libbson-1.0.so.0 ${CND_DISTDIR}/libluajit-5.1.so.2 ${CND_DISTDIR}/libsnappy.so.0 ${CND_DISTDIR}/libmongoc-1.0.so.0
+	${RM} ${CND_DISTDIR}/luaMongo.bin
 
 # Subprojects
 .clean-subprojects:

@@ -82,13 +82,17 @@
           </incDir>
           <commandLine>-std=c++17</commandLine>
         </ccTool>
+        <asmTool>
+          <developmentMode>0</developmentMode>
+        </asmTool>
         <linkerTool>
-          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin</output>
+          <output>${CND_DISTDIR}/luaMongo.bin</output>
+          <linkerDepDynSerchKind>0</linkerDepDynSerchKind>
           <linkerLibItems>
-            <linkerLibFileItem>../lib/bson.so</linkerLibFileItem>
-            <linkerLibFileItem>../lib/lua51.so</linkerLibFileItem>
-            <linkerLibFileItem>../lib/mongoc.so</linkerLibFileItem>
-            <linkerLibFileItem>../lib/snappy.so</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libbson-1.0.so.0</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libluajit-5.1.so.2</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libmongoc-1.0.so.0</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libsnappy.so.0</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -205,15 +209,16 @@
           <developmentMode>5</developmentMode>
         </fortranCompilerTool>
         <asmTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>0</developmentMode>
         </asmTool>
         <linkerTool>
-          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/luaMongo.bin</output>
+          <output>${CND_DISTDIR}/luaMongo.bin</output>
+          <linkerDepDynSerchKind>0</linkerDepDynSerchKind>
           <linkerLibItems>
-            <linkerLibFileItem>../lib/bson.so</linkerLibFileItem>
-            <linkerLibFileItem>../lib/lua51.so</linkerLibFileItem>
-            <linkerLibFileItem>../lib/mongoc.so</linkerLibFileItem>
-            <linkerLibFileItem>../lib/snappy.so</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libbson-1.0.so.0</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libluajit-5.1.so.2</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libmongoc-1.0.so.0</linkerLibFileItem>
+            <linkerLibFileItem>../lib/libsnappy.so.0</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
