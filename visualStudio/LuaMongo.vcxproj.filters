@@ -142,9 +142,6 @@
     <None Include="..\test\test_crud.lua">
       <Filter>test</Filter>
     </None>
-    <None Include="..\test\test1.lua">
-      <Filter>test</Filter>
-    </None>
     <None Include="..\test\tmp.js">
       <Filter>test</Filter>
     </None>

@@ -4,7 +4,6 @@
 #include <cmath> //pow
 #include "time.h"
 
-
 #define BUFFER_SIZE 25
 
 const time_t Date::getCurrentTimeMillis() {
@@ -22,23 +21,11 @@ const String Date::toIsoString(time_t timestamp) {
     size_t size = strftime(buf, BUFFER_SIZE, "%Y-%m-%dT%H:%M:%S", pTM);
     if (fractions) {
         sprintf(buf + size, ".%03dZ", fractions);
-    } else {
+    } 
+    else {
         sprintf(buf + size, "Z");
     }
     return String(buf);
-
-    /*time_t tSec = timestamp / 1000;
-    int fractions = (int)(timestamp % tSec);
-    struct tm tm;
-    SecondsSinceEpochToDateTime(&tm, tSec);
-    char buf[BUFFER_SIZE];
-    if (fractions) {
-    sprintf_s(buf, BUFFER_SIZE, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, fractions);
-    }
-    else {
-    sprintf_s(buf, BUFFER_SIZE, "%04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-    }
-    return String(buf);*/
 }
 
 const bool Date::fromIsoString(const char *isoString, time_t *timestampOut) {
@@ -73,14 +60,14 @@ const bool Date::fromIsoString(const char *isoString, time_t *timestampOut) {
             }
         }
     }
-    //_tzset();
-    tzset();
+    _tzset();
     
     long timezoneDiff;
 #ifdef _get_timezone
     _get_timezone(&timezoneDiff);
 #else
-    timezoneDiff = timezone;
+    timezoneDiff = _timezone;
+
 #endif
 
     *timestampOut = 1000 * (timesec - timezoneDiff) + f;

@@ -83,7 +83,7 @@ int run(int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
 	run(argc, argv);
 	LuaManager::destroyInstance();
-	#ifdef DEBUG
+	#ifdef DEBUG_MEMORY
 		if (MemoryManager::getInstance()->hasLeak()) {
 			printf("\n");
 			MemoryManager::getInstance()->displayInfo();

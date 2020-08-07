@@ -13,12 +13,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>test ../test/test1.lua</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>test ../test/test_bsonTypes.lua</LocalDebuggerCommandArguments>
     <LocalDebuggerDebuggerType>NativeOnly</LocalDebuggerDebuggerType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
-    <LocalDebuggerCommandArguments>test ../test/test1.lua</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>test ../test/test_bsonTypes.lua</LocalDebuggerCommandArguments>
   </PropertyGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 #ifdef _WIN32
 #include <filesystem>
-namespace fs = std::experimental::filesystem : v1;
+namespace fs = std::filesystem;
 #else
 #include <sys/stat.h>
 #endif
@@ -66,7 +66,11 @@ const bool File::getData(std::string *result) const {
 }
 
 const std::string File::toString(const std::wstring &wstring) const {
-    return std::string(wstring.begin(), wstring.end());
+    std::string res = "";
+    for (const wchar_t c : wstring) {
+        res += (char)c;
+    }
+    return res;
 }
 
 const std::string File::toString(const char *str) const {

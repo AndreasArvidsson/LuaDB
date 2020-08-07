@@ -3,4 +3,4 @@ visualStudio/.vs
 netbeans/build/
 netbeans/dist/
 test/tmp*
-todo.*
+*.txt

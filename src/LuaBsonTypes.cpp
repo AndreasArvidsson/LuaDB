@@ -331,10 +331,10 @@ int LuaBsonTypes::lua_numberLongToString(lua_State *L) {
 	char buf[BUFFER_SIZE];
 	int length;
 	if (abs(value) > INT_MAX) {
-		length = snprintf(buf, BUFFER_SIZE, "%s(\"%ld\")", BSON_NAME_INT64, value);
+		length = snprintf(buf, BUFFER_SIZE, "%s(\"%lld\")", BSON_NAME_INT64, value);
 	}
 	else {
-		length = snprintf(buf, BUFFER_SIZE, "%s(%ld)", BSON_NAME_INT64, value);
+		length = snprintf(buf, BUFFER_SIZE, "%s(%lld)", BSON_NAME_INT64, value);
 	}
 	lua_pushlstring(L, buf, length);
 	return 1;
@@ -342,7 +342,7 @@ int LuaBsonTypes::lua_numberLongToString(lua_State *L) {
 
 int LuaBsonTypes::lua_numberLongConcat(lua_State *L) {
 	char buf[BUFFER_SIZE];
-	int length = snprintf(buf, BUFFER_SIZE, "%s%ld", lua_tostring(L, 1), lua_readNumberLong(L, 2));
+	int length = snprintf(buf, BUFFER_SIZE, "%s%lld", lua_tostring(L, 1), lua_readNumberLong(L, 2));
 	lua_pushlstring(L, buf, length);
 	return 1;
 }
