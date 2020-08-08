@@ -172,6 +172,7 @@ const luaL_reg LuaManager::_bindFuncs[] = {
 	{ "help", lua_help },
 	{ "use", lua_use },
 	{ "getSiblingDB", lua_getSiblingDB },
+	{ "print", lua_printJson },
 	{ "printjson", lua_printJson },
 	{ "tojson", lua_toJson },
 	{ "time", lua_time },
@@ -203,6 +204,11 @@ int LuaManager::lua_use(lua_State *L) {
 int LuaManager::lua_getSiblingDB(lua_State *L) {
 	LuaDB::lua_push(L, _pInstance->getDatabase(lua_tostring(L, 1)));
 	return 1;
+}
+
+int LuaManager::lua_print(lua_State* L) {
+	printf("%s\n", lua_tostring(L, 1));
+	return 0;
 }
 
 int LuaManager::lua_printJson(lua_State *L) {

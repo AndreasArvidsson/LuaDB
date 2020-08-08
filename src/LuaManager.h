@@ -39,6 +39,7 @@ private:
 	
 	static int lua_help(lua_State *L);
 	static int lua_use(lua_State *L);
+	static int lua_print(lua_State* L);
 	static int lua_printJson(lua_State *L);
 	static int lua_toJson(lua_State *L);
 	static int lua_time(lua_State *L);
