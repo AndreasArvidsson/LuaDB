@@ -1,4 +1,4 @@
-# LuaMongo
+# LuaDB
 Lua CLI client for MongoDB
 
 ## Background
