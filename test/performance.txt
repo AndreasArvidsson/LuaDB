@@ -1,3 +1,7 @@
+
+---------------------------------------
+2017
+
 Size					100000 
 
 LUA
@@ -29,6 +33,39 @@ Remove                   3804 ms
 Empty loop               1594 ms
 Function call            2378 ms
 
+------------------------------------------
+2020
 
+LUA
+Size                    100000
 
+Insert {}               4853    ms
+Insert table            8729    ms
+Insert table inline     8872    ms
+Insert document         8793    ms
+Insert document inline  9108    ms
+insertMany doc          1033    ms
+count                   275     ms
+cursor:next             1298    ms
+forEach                 1277    ms
+iterator                1280    ms
+toArray                 1520    ms
+remove                  3849    ms
+Empty loop              24      ms
+Function call           24      ms
+
+JS
+Size                     100000
+
+Insert {}                12014 ms
+Insert document          18974 ms
+Insert document inline   19391 ms
+insertMany               2828 ms
+count                    240 ms
+cursor.next              940 ms
+forEach                  979 ms
+toArray                  956 ms
+remove                   3858 ms
+Empty loop               24 ms
+Function call            29 ms
 

@@ -1,138 +1,157 @@
+-- ./x64/Release/LuaMongo.exe test ../test/performance.lua
 
 local coll = db:getCollection("test")
-local t1
 local size = 100000
 
-local table = {
-	a = -5,
-	b = 7,
-	c = -2.5,
-	d = 7.9,
-	e = true,
-	f = false,
-	g = "hej",
-	h = null,
-	i = {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
-	j = {a = 2},
-	k = {}
-}
-
-local doc = Document({
-	"a",-5,
-	"b", 7,
-	"c", -2.5,
-	"d", 7.9,
-	"e", true,
-	"f", false,
-	"g", "hej",
-	"h", null,
-	"i", {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
-	"j", {a = 2},
-	"k", {}
-})
+function run(name, callback)
+	local t0 = time()
+	callback()
+	local t1 = time()
+	print(name, t1 - t0, "ms")
+end
 
 -- Clean state
 coll:remove({})
 
-print("\nSize\t\t", size, "\n")
+print("\nSize", "\t", size, "\n")
 
-local t1 = time();
-for i=1, size do
-	coll:insert({})
-end
-print("Insert {}\t", (time() - t1), "ms")
+run("Insert {}\t", function()
+	for i=1, size do
+		coll:insert({})
+	end
+end)
 
-local t1 = time();
-for i=1, size do
-	coll:insert(table)
-end
-print("Insert table\t", (time() - t1), "ms")
+run("Insert table\t", function()
+	local table = {
+		a = -5,
+		b = 7,
+		c = -2.5,
+		d = 7.9,
+		e = true,
+		f = false,
+		g = "hej",
+		h = null,
+		i = {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
+		j = {a = 2},
+		k = {}
+	}
+	for i=1, size do
+		coll:insert(table)
+	end
+end)
 
-local t1 = time();
-for i=1, size do
-	coll:insert({
-	a = -5,
-	b = 7,
-	c = -2.5,
-	d = 7.9,
-	e = true,
-	f = false,
-	g = "hej",
-	h = null,
-	i = {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
-	j = {a = 2},
-	k = {}
-})
-end
-print("Insert table inline", (time() - t1), "ms");
+run("Insert table inline", function()
+	for i=1, size do
+		coll:insert({
+			a = -5,
+			b = 7,
+			c = -2.5,
+			d = 7.9,
+			e = true,
+			f = false,
+			g = "hej",
+			h = null,
+			i = {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
+			j = {a = 2},
+			k = {}
+		})
+	end
+end)
 
-local t1 = time();
-for i=1, size do
-	coll:insert(doc);
-end
-print("Insert document\t", (time() - t1), "ms");
+run("Insert document\t", function()
+	local doc = Document({
+		"a",-5,
+		"b", 7,
+		"c", -2.5,
+		"d", 7.9,
+		"e", true,
+		"f", false,
+		"g", "hej",
+		"h", null,
+		"i", {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
+		"j", {a = 2},
+		"k", {}
+	})
+	for i=1, size do
+		coll:insert(doc);
+	end
+end)
 
-local t1 = time();
-for i=1, size do
-	coll:insert(Document({
-	"a",-5,
-	"b", 7,
-	"c", -2.5,
-	"d", 7.9,
-	"e", true,
-	"f", false,
-	"g", "hej",
-	"h", null,
-	"i", {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
-	"j", {a = 2},
-	"k", {}
-}));
-end
-print("Insert doc inline", (time() - t1), "ms");
+run("Insert document inline", function()
+	for i=1, size do
+		coll:insert(Document({
+		"a",-5,
+		"b", 7,
+		"c", -2.5,
+		"d", 7.9,
+		"e", true,
+		"f", false,
+		"g", "hej",
+		"h", null,
+		"i", {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
+		"j", {a = 2},
+		"k", {}
+	}));
+	end
+end)
 
-local t1 = time();
-local docs = {};
-for i=1, size do
-	docs[i] = doc;
-end
-coll:insertMany(docs);
-print("InsertMany doc\t", (time() - t1), "ms");
+run("insertMany doc\t", function()
+	local doc = Document({
+		"a",-5,
+		"b", 7,
+		"c", -2.5,
+		"d", 7.9,
+		"e", true,
+		"f", false,
+		"g", "hej",
+		"h", null,
+		"i", {1,2,3, "hello", null, true, false, -1, 1, 5.5, 2.74},
+		"j", {a = 2},
+		"k", {}
+	})
+	local docs = {};
+	for i=1, size do
+		docs[i] = doc;
+	end
+	coll:insertMany(docs);
+end)
 
-local t1 = time();
-coll:count({a = -5});
-print("Count\t\t", (time() - t1), "ms");
+run("count\t\t", function()
+	coll:count({a = -5});
+end)
 
-local t1 = time();
-local cursor = coll:find({});
-while(cursor:next()) do end
-print("Next\t\t", (time() - t1), "ms");
+run("cursor:next\t", function()
+	local cursor = coll:find({});
+	while(cursor:next()) do 
+	end
+end)
 
-local t1 = time();
-coll:find():forEach(function(doc) 
-end);
-print("ForEach\t\t", (time() - t1), "ms");
+run("forEach\t\t", function()
+	coll:find():forEach(function(doc) 
+	end)
+end)
 
-local t1 = time();
-for result in coll:find():iterator() do
-end
-print("Iterator\t", (time() - t1), "ms");
+run("iterator\t", function()
+	for result in coll:find():iterator() do 
+	end
+end)
 
-local t1 = time();
-coll:find():toArray()
-print("toArray\t\t", (time() - t1), "ms");
+run("toArray\t\t", function()
+	coll:find():toArray()
+end)
 
-local t1 = time();
-coll:remove({});
-print("Remove\t\t", (time() - t1), "ms");
+run("remove\t\t", function()
+	coll:remove({});
+end)
 
-local t1 = time();
-for i=1, size * 1000 do
-end
-print("Empty loop\t", (time() - t1), "ms");
+run("Empty loop\t", function()
+	for i=1, size * 1000 do
+	end
+end)
 
-function func() end
-local t1 = time();
-for i=1, size * 1000 do
-	func();
-end
-print("Function call\t", (time() - t1), "ms");
+run("Function call\t", function()
+	function func() end
+	for i=1, size * 1000 do
+		func();
+	end
+end)
