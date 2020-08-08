@@ -20,6 +20,7 @@ string MongoManager::getUri(const string host, const int port) {
 
 MongoManager::MongoManager() {
 	mongoc_init();
+	_pClient = nullptr;
 }
 
 MongoManager::~MongoManager() {
@@ -27,26 +28,25 @@ MongoManager::~MongoManager() {
 	mongoc_cleanup();
 }
 
-MongoDB* MongoManager::getDatabase(const string name) {
+MongoDB* MongoManager::getDatabase(const string& name) {
 	if (_pClient) {
-		std::unordered_map<string, MongoDB*>::const_iterator found = _databases.find(name);
+		const auto found = _databases.find(name);
 		//Already have this DB.
 		if (found != _databases.end()) {
-			return found->second;
+			return found->second.get();
 		}
 		//Create new DB
-		MongoDB *pdB = new MongoDB(_pClient, name);
-		_databases[name] = pdB;
-		return pdB;
+		_databases[name] = std::make_unique<MongoDB>(_pClient, name);
+		return _databases[name].get();
 	}
 	return nullptr;
 }
 
-const bool MongoManager::connect(const string host, const int port, bson_t *pReply, bson_error_t *pError) {
+const bool MongoManager::connect(const string& host, const int port, bson_t *pReply, bson_error_t *pError) {
 	return connect(getUri(host, port), pReply, pError);
 }
 
-const bool MongoManager::connect(const string uri, bson_t *pReply, bson_error_t *pError) {
+const bool MongoManager::connect(const string& uri, bson_t *pReply, bson_error_t *pError) {
 	//Clean old states first
 	destroyClient();
 	_uri = uri;
@@ -73,9 +73,6 @@ const bool MongoManager::getDatabaseNames(std::vector<string> &namesOut, bson_er
 
 void MongoManager::destroyClient() {
 	if (_pClient) {
-		for (auto it : _databases) {
-			delete it.second;
-		}
 		mongoc_client_destroy(_pClient);
 	}
 }

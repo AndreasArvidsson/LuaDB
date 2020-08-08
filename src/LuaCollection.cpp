@@ -129,8 +129,9 @@ int LuaCollection::lua_find(lua_State *L) {
 	if (pProjection) {
 		bson_destroy(pProjection);
 	}
-	LuaCursor *pCursor = new LuaCursor(pCollection->_pMongoCollection, pMongoCursor);
-	LuaCursor::lua_push(L, pCursor);
+
+    LuaCursor::lua_push(L, pCollection->_pMongoCollection, pMongoCursor);
+
 	return 1;
 }
 
@@ -190,8 +191,9 @@ int LuaCollection::lua_aggregate(lua_State *L) {
 	if (pOptions) {
 		bson_destroy(pOptions);
 	}
-	LuaCursor *pCursor = new LuaCursor(pCollection->_pMongoCollection, pMongoCursor);
-	LuaCursor::lua_push(L, pCursor);
+
+    LuaCursor::lua_push(L, pCollection->_pMongoCollection, pMongoCursor);
+
 	return 1;
 }
 

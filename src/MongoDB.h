@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <memory>
 #include "MongoCollection.h"
 
 class MongoDB {
@@ -20,7 +21,7 @@ public:
 	const bool drop(bson_error_t *pError = nullptr) const;
 
 private:
-	std::unordered_map<std::string, MongoCollection*> _collections;
+	std::unordered_map<std::string, std::unique_ptr<MongoCollection>> _collections;
 	std::string _name;
 	mongoc_database_t *_pDatabase;
 	mongoc_client_t *_pClient;

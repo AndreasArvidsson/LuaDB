@@ -15,25 +15,42 @@ using std::string;
 *************** STATIC ***************
 **************************************/
 
-LuaManager* LuaManager::_pInstance = nullptr;
+std::unique_ptr<LuaManager> LuaManager::_pInstance;
 
 LuaManager* LuaManager::getInstance() {
     if (!_pInstance) {
-        _pInstance = new LuaManager();
+        _pInstance = std::make_unique<LuaManager>();
     }
-    return _pInstance;
+    return _pInstance.get();
 }
 
 void LuaManager::destroyInstance() {
-    delete _pInstance;
+    _pInstance = nullptr;
 }
 
 /*************************************
 *************** PUBLIC ***************
 **************************************/
 
+LuaManager::LuaManager() {
+    _pMongo = std::make_unique<MongoManager>();
+    _isRunning = true;
+    _L = nullptr;
+    _pDB = nullptr;
+}
+
+LuaManager::~LuaManager() {
+    if (_L) {
+        //Run Lua garbage collector.
+        lua_gc(_L, LUA_GCCOLLECT, 0);
+        //Close open state.
+        lua_close(_L);
+    }
+    _pMongo = nullptr;
+}
+
 MongoManager* LuaManager::getMongo() const {
-    return _pMongo;
+    return _pMongo.get();
 }
 
 void LuaManager::useDatabase(const string& name) {
@@ -79,26 +96,6 @@ void LuaManager::loadString(const string& str) {
 /*************************************
 *************** PRIVATE **************
 **************************************/
-
-LuaManager::LuaManager() {
-    _pMongo = new MongoManager();
-    _isRunning = true;
-    _L = nullptr;
-    _pDB = nullptr;
-}
-
-LuaManager::~LuaManager() {
-    if (_L) {
-        //Run Lua garbage collector.
-        lua_gc(_L, LUA_GCCOLLECT, 0);
-        //Close open state.
-        lua_close(_L);
-    }
-    for (auto it : _databases) {
-        delete it.second;
-    };
-    delete _pMongo;
-}
 
 lua_State* LuaManager::createNewState() {
     //Create new lua state
@@ -152,16 +149,15 @@ void LuaManager::printError(lua_State* L) {
 }
 
 LuaDB* LuaManager::getDatabase(const string& name) {
-    std::unordered_map<string, LuaDB*>::const_iterator found = _databases.find(name);
+    const auto found = _databases.find(name);
     //Already have this DB.
     if (found != _databases.end()) {
-        return found->second;
+        return found->second.get();
     }
     //Create new DB
     MongoDB* pMongoDB = _pMongo->getDatabase(name);
-    LuaDB* pLuaDB = new LuaDB(pMongoDB);
-    _databases[name] = pLuaDB;
-    return pLuaDB;
+    _databases[name] = std::make_unique<LuaDB>(pMongoDB);
+    return _databases[name].get();
 }
 
 /*************************************
@@ -180,7 +176,6 @@ const luaL_reg LuaManager::_bindFuncs[] = {
     { "showCollections", lua_showCollections },
     { "getDatabaseNames", lua_getDatabaseNames },
     { "exit", lua_exit },
-    { "cTest", lua_cTest },
     { NULL, NULL }
 };
 
@@ -274,104 +269,3 @@ int LuaManager::lua_showCollections(lua_State* L) {
     _pInstance->_pDB->showCollections(L);
     return 0;
 }
-
-int LuaManager::lua_cTest(lua_State* L) {
-    //time_t t1;
-    //int size = 100000000;
-    ////size = 1;
-
-    //const uint8_t raw[5] = { 'a', 'b','c',1,5 };
-    //bson_oid_t oid;
-    //bson_t *scope = BCON_NEW("name", "myScope");
-    //bson_oid_init(&oid, NULL);
-    //bson_t *bson = BCON_NEW(
-    //	"double", BCON_DOUBLE(123.4),
-    //	"utf8", "this is my string",
-    //	"document", BCON_DOCUMENT(scope),
-    //	"array", "[", "a", BCON_BOOL(false), BCON_DOUBLE(5), "]",
-    //	"binary", BCON_BIN(BSON_SUBTYPE_FUNCTION, raw, sizeof raw),
-    //	"undefined", BCON_UNDEFINED,
-    //	"oid", BCON_OID(&oid),
-    //	"bool", BCON_BOOL(true),
-    //	"datetime", BCON_DATE_TIME(12345678),
-    //	"null", BCON_NULL,
-    //	"regex", BCON_REGEX("^hello", "i"),
-    //	"codewscope", BCON_CODEWSCOPE("var a = 1;", scope),
-    //	"dbpointer", BCON_DBPOINTER("test.test", &oid),
-    //	"code", BCON_CODE("var a = function() {}"),
-    //	"symbol", BCON_SYMBOL("my_symbol"),
-    //	"int32", BCON_INT32(1234),
-    //	"timestamp", BCON_TIMESTAMP(1234, 4567),
-    //	"int64", BCON_INT64(4321),
-    //	"maxkey", BCON_MAXKEY,
-    //	"minkey", BCON_MINKEY
-    //);
-    //bson_iter_t it;
-    //bson_iter_init(&it, bson);
-    //bson_iter_next(&it);
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	lua_createtable(L, 1, 0);
-    //	lua_pushinteger(L, 666);
-    //	lua_pushinteger(L, 1);	
-    //	lua_rawset(L, -3);
-    //	lua_pop(L, 1);
-    //}
-    //printf("1 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	lua_createtable(L, 1, 0);
-    //	lua_pushinteger(L, 666);
-    //	lua_rawseti(L, -2, 1);
-    //	lua_pop(L, 1);
-    //}
-    //printf("2 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-    //lua_createtable(L, 1, 0);
-    //lua_pushinteger(L, 666);
-    //lua_rawseti(L, -2, 1);
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	lua_pushinteger(L, 1);
-    //	lua_rawget(L, -2);
-    //	lua_pop(L, 1);
-    //}
-    //printf("3 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	lua_rawgeti(L, -1, 1);
-    //	lua_pop(L, 1);
-    //}
-    //printf("4 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	*(int64_t*)lua_newuserdata(L, sizeof(int64_t)) = 666;
-    //	lua_pop(L, 1);
-    //}
-    //printf("4 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	*(int64_t*)lua_newuserdata(L, sizeof(int64_t)) = 666LL;
-    //	lua_pop(L, 1);
-    //}
-    //printf("5 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-    //t1 = Date::getCurrentTimeMillis();
-    //for (int i = 0; i < size; ++i) {
-    //	memcpy(lua_newuserdata(L, sizeof("lalalalalmystring")), "lalalalalmystring", sizeof("lalalalalmystring"));
-    //	lua_pop(L, 1);
-    //}
-    //printf("6 %lldms\n", t1 = Date::getCurrentTimeMillis() - t1);
-
-    int* p = new int(666);
-    lua_pushlightuserdata(L, p);
-    return 1;
-}
-

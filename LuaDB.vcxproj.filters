@@ -118,5 +118,8 @@
     <None Include="test\test_printTypes.lua">
       <Filter>test</Filter>
     </None>
+    <None Include="test\tmp.lua">
+      <Filter>test</Filter>
+    </None>
   </ItemGroup>
 </Project>

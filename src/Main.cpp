@@ -49,8 +49,9 @@ int run(int argc, char* argv[]) {
 #ifdef DEBUG 
     pLua->loadFile("test/test_bsonTypes.lua");
     pLua->loadFile("test/test_printTypes.lua");
+    pLua->loadFile("test/tmp.lua");
     // pLua->loadFile("test/test_crud.lua");
-    // pLua->loadFile("test/performance.lua");
+     //pLua->loadFile("test/performance.lua");
 #endif  
 
     if (args.files.size()) {
@@ -95,6 +96,7 @@ int main(int argc, char* argv[]) {
 
     run(argc, argv);
     LuaManager::destroyInstance();
+
 #ifdef DEBUG
     if (MemoryManager::getInstance()->hasLeak()) {
         printf("\n");
@@ -103,5 +105,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 #endif
+
     return 0;
 }

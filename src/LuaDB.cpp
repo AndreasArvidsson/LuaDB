@@ -35,25 +35,18 @@ LuaDB::LuaDB(MongoDB *pMongoDB) {
 	_pMongoDB = pMongoDB;
 }
 
-LuaDB::~LuaDB() {
-	for (auto it : _collections) {
-		delete it.second;
-	}
-}
-
 LuaCollection* LuaDB::getCollection(const string name) {
-	std::unordered_map<string, LuaCollection*>::const_iterator found = _collections.find(name);
+	const auto found = _collections.find(name);
 
 	//Already have this collection.
 	if (found != _collections.end()) {
-		return found->second;
+		return found->second.get();
 	}
 
 	//Create new collection
 	MongoCollection *pMongoCollection = _pMongoDB->getCollection(name);
-	LuaCollection *pColl = new LuaCollection(pMongoCollection);
-	_collections[name] = pColl;
-	return pColl;
+	_collections[name] = std::make_unique<LuaCollection>(pMongoCollection);
+	return _collections[name].get();
 }
 
 void LuaDB::showCollections(lua_State *L) {

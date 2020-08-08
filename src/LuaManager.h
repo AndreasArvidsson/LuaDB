@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "LuaDB.h"
 
 class MongoManager;
@@ -8,6 +9,9 @@ class LuaManager {
 public:
 	static LuaManager* getInstance();
 	static void destroyInstance();
+
+	LuaManager();
+	~LuaManager();
 
 	MongoManager* getMongo() const;
 
@@ -20,16 +24,14 @@ public:
 	void loadString(const std::string&str);
 
 private:
-	static LuaManager *_pInstance;
+	static std::unique_ptr<LuaManager> _pInstance;
+	//static LuaManager* _pInstance;
 
-	std::unordered_map<std::string, LuaDB*> _databases;
-	MongoManager *_pMongo;
+	std::unordered_map<std::string, std::unique_ptr<LuaDB>> _databases;
+	std::unique_ptr<MongoManager> _pMongo;
 	LuaDB *_pDB;
 	bool _isRunning;
-	lua_State *_L;
-
-	LuaManager();
-	~LuaManager();
+	lua_State *_L;	
 
 	LuaDB* getDatabase(const std::string& name);
 	lua_State* createNewState();
@@ -49,7 +51,5 @@ private:
 	static int lua_showDatabases(lua_State *L);
 	static int lua_showCollections(lua_State *L);
 	static int lua_getDatabaseNames(lua_State *L);
-	
-	static int lua_cTest(lua_State *L);
 
 };

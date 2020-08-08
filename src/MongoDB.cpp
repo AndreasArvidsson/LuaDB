@@ -9,9 +9,6 @@ MongoDB::MongoDB(mongoc_client_t *pClient, const string name) {
 }
 
 MongoDB::~MongoDB() {
-	for (auto it : _collections) {
-		delete it.second;
-	}
 	mongoc_database_destroy(_pDatabase);
 }
 
@@ -24,26 +21,24 @@ mongoc_database_t* MongoDB::getMongo() const {
 }
 
 MongoCollection* MongoDB::getCollection(const string name) {
-	std::unordered_map<string, MongoCollection*>::const_iterator found = _collections.find(name);
+	const auto found = _collections.find(name);
 
 	//Already have this collection.
 	if (found != _collections.end()) {
-		return found->second;
+		return found->second.get();
 	}
 
 	//Create new collection
-	mongoc_collection_t *p = mongoc_database_get_collection(_pDatabase, name.c_str());
-	MongoCollection *coll = new MongoCollection(this, name, p);
-	_collections[name] = coll;
-	return coll;
+	mongoc_collection_t* p = mongoc_database_get_collection(_pDatabase, name.c_str());
+	_collections[name] = std::make_unique<MongoCollection>(this, name, p);
+	return _collections[name].get();
 }
 
 MongoCollection* MongoDB::createCollection(const string name, const bson_t *pOptions, bson_error_t *pError) {
 	mongoc_collection_t *p = mongoc_database_create_collection(_pDatabase, name.c_str(), pOptions, pError);
 	if (p) {
-		MongoCollection *coll = new MongoCollection(this, name, p);
-		_collections[name] = coll;
-		return coll;
+		_collections[name] = std::make_unique<MongoCollection>(this, name, p);
+		return _collections[name].get();
 	}
 	return nullptr;
 }

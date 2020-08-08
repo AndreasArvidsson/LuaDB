@@ -171,6 +171,7 @@
     <None Include="test\test_crud.lua" />
     <None Include="test\test_printTypes.lua" />
     <None Include="test\tmp.js" />
+    <None Include="test\tmp.lua" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">

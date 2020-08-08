@@ -13,13 +13,13 @@ coll:remove({})
 
 print("\nSize", "\t", size, "\n")
 
-run("Insert {}\t", function()
+run("Insert {}\t\t", function()
 	for i=1, size do
 		coll:insert({})
 	end
 end)
 
-run("Insert table\t", function()
+run("Insert table\t\t", function()
 	local table = {
 		a = -5,
 		b = 7,
@@ -38,7 +38,7 @@ run("Insert table\t", function()
 	end
 end)
 
-run("Insert table inline", function()
+run("Insert table inline\t", function()
 	for i=1, size do
 		coll:insert({
 			a = -5,
@@ -56,7 +56,7 @@ run("Insert table inline", function()
 	end
 end)
 
-run("Insert document\t", function()
+run("Insert document\t\t", function()
 	local doc = Document({
 		"a",-5,
 		"b", 7,
@@ -75,7 +75,7 @@ run("Insert document\t", function()
 	end
 end)
 
-run("Insert document inline", function()
+run("Insert document inline\t", function()
 	for i=1, size do
 		coll:insert(Document({
 		"a",-5,
@@ -93,7 +93,7 @@ run("Insert document inline", function()
 	end
 end)
 
-run("insertMany doc\t", function()
+run("insertMany doc\t\t", function()
 	local doc = Document({
 		"a",-5,
 		"b", 7,
@@ -114,40 +114,40 @@ run("insertMany doc\t", function()
 	coll:insertMany(docs);
 end)
 
-run("count\t\t", function()
+run("count\t\t\t", function()
 	coll:count({a = -5});
 end)
 
-run("cursor:next\t", function()
+run("cursor:next\t\t", function()
 	local cursor = coll:find({});
 	while(cursor:next()) do 
 	end
 end)
 
-run("forEach\t\t", function()
+run("forEach\t\t\t", function()
 	coll:find():forEach(function(doc) 
 	end)
 end)
 
-run("iterator\t", function()
+run("iterator\t\t", function()
 	for result in coll:find():iterator() do 
 	end
 end)
 
-run("toArray\t\t", function()
+run("toArray\t\t\t", function()
 	coll:find():toArray()
 end)
 
-run("remove\t\t", function()
+run("remove\t\t\t", function()
 	coll:remove({});
 end)
 
-run("Empty loop\t", function()
+run("Empty loop\t\t", function()
 	for i=1, size * 1000 do
 	end
 end)
 
-run("Function call\t", function()
+run("Function call\t\t", function()
 	function func() end
 	for i=1, size * 1000 do
 		func();
