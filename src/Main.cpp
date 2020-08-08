@@ -11,8 +11,10 @@ int run(int argc, char* argv[]) {
     CliArgs::parse(argc, argv, &args);
     const String uri = MongoManager::getUri(args.host, args.port);
 
-    //TODO
+//TODO
+#ifdef DEBUG 
     args.database = "test";
+#endif
 
     if (!args.quiet) {
         printf("LuaDB shell version: %s\n", LUA_DB_VERSION);
@@ -44,14 +46,13 @@ int run(int argc, char* argv[]) {
         pLua->useDatabase(args.database);
     }
 
-    //TODO
+//TODO
+#ifdef DEBUG 
     pLua->loadFile("../test/test_bsonTypes.lua");
     pLua->loadFile("../test/test_printTypes.lua");
-    //	pLua->loadFile("../test/test_crud.lua");
-        //pLua->loadFile("../test/performance.lua");
-
-    
-    
+    // pLua->loadFile("../test/test_crud.lua");
+    // pLua->loadFile("../test/performance.lua");
+#endif  
 
     if (args.files.size()) {
         for (int i = 0; i < args.files.size(); ++i) {
@@ -95,7 +96,7 @@ int main(int argc, char* argv[]) {
 
     run(argc, argv);
     LuaManager::destroyInstance();
-#ifdef DEBUG_MEMORY
+#ifdef DEBUG
     if (MemoryManager::getInstance()->hasLeak()) {
         printf("\n");
         MemoryManager::getInstance()->displayInfo();

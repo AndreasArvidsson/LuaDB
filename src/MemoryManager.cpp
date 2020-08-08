@@ -1,6 +1,6 @@
 #include "MemoryManager.h"
 
-#ifdef DEBUG_MEMORY
+#ifdef DEBUG
 
 MemoryManager* MemoryManager::_pInstance = nullptr;
 
