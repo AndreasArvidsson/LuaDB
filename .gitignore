@@ -1,5 +1,5 @@
-visualStudio/x64
-visualStudio/.vs
+x64
+.vs
 netbeans/build/
 netbeans/dist/
 test/tmp*

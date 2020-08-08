@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LuaDB", "LuaDB.vcxproj", "{D74D8F6E-63E0-4452-929C-DC36F32BA8B6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "..\Core\Core.vcxproj", "{5F894556-9A4B-4255-B8B7-5C1AE0F9CF26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{D74D8F6E-63E0-4452-929C-DC36F32BA8B6}.Debug|x64.Build.0 = Debug|x64
 		{D74D8F6E-63E0-4452-929C-DC36F32BA8B6}.Release|x64.ActiveCfg = Release|x64
 		{D74D8F6E-63E0-4452-929C-DC36F32BA8B6}.Release|x64.Build.0 = Release|x64
+		{5F894556-9A4B-4255-B8B7-5C1AE0F9CF26}.Debug|x64.ActiveCfg = Debug|x64
+		{5F894556-9A4B-4255-B8B7-5C1AE0F9CF26}.Debug|x64.Build.0 = Debug|x64
+		{5F894556-9A4B-4255-B8B7-5C1AE0F9CF26}.Release|x64.ActiveCfg = Release|x64
+		{5F894556-9A4B-4255-B8B7-5C1AE0F9CF26}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64BD98E3-6E25-4B3C-9D52-C8E60796FF32}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <unordered_map>
 #include "LuaCollection.h"
 
@@ -12,12 +13,12 @@ public:
 	LuaDB(MongoDB *pMongoDB);
 	~LuaDB();
 
-	LuaCollection* getCollection(const String name);
+	LuaCollection* getCollection(const std::string name);
 	void showCollections(lua_State *L);
 
 private:
 	MongoDB *_pMongoDB;
-	std::unordered_map<String, LuaCollection*> _collections;
+	std::unordered_map<std::string, LuaCollection*> _collections;
 
 	static LuaDB* lua_get(lua_State *L, int index);
 

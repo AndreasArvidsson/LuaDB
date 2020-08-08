@@ -1,17 +1,14 @@
 #pragma once
-#include "String.h"
+#include <string>
 #include <vector>
 
 class CliArgs {
 public:	
-	String host, database;
+	CliArgs(int argc, char* argv[]);
+
+	std::vector<std::string> files;
+	std::string host, database;
 	int port;
-	std::vector<String> files;
 	bool shell, quiet;
-
-	static void parse(int argc, char* argv[], CliArgs *pArgsOut);
-
-	CliArgs();
-
 };
 

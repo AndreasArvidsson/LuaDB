@@ -3,6 +3,8 @@
 #include "LuaParserUtil.h"
 #include "LuaBsonTypes.h"
 
+using std::string;
+
 #define DB_TABLE_NAME "MongoDB"
 
 /*************************************
@@ -39,8 +41,8 @@ LuaDB::~LuaDB() {
 	}
 }
 
-LuaCollection* LuaDB::getCollection(const String name) {
-	std::unordered_map<String, LuaCollection*>::const_iterator found = _collections.find(name);
+LuaCollection* LuaDB::getCollection(const string name) {
+	std::unordered_map<string, LuaCollection*>::const_iterator found = _collections.find(name);
 
 	//Already have this collection.
 	if (found != _collections.end()) {
@@ -55,7 +57,7 @@ LuaCollection* LuaDB::getCollection(const String name) {
 }
 
 void LuaDB::showCollections(lua_State *L) {
-	std::vector<String> names;
+	std::vector<string> names;
 	bson_error_t error;
 	if (!_pMongoDB->getCollectionNames(names, &error)) {
 		luaL_error(L, "Show collections failure: %s\n", error.message);
@@ -138,7 +140,7 @@ int LuaDB::lua_hasCollection(lua_State *L) {
 
 int LuaDB::lua_getCollectionNames(lua_State *L) {
 	LuaDB *pDB = lua_get(L, 1);
-	std::vector<String> names;
+	std::vector<string> names;
 	bson_error_t error;
 	if (!pDB->_pMongoDB->getCollectionNames(names, &error)) {
 		luaL_error(L, "Get collection names failure: %s\n", error.message);

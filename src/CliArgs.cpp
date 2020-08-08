@@ -1,36 +1,24 @@
 #include "CliArgs.h"
 #include <cstring> //strstr
+#include "CliOpts.h"
 
-void CliArgs::parse(int argc, char* argv[], CliArgs *pArgsOut) {
-	bool findDb = true;
-	for (int i = 1; i < argc; ++i) {
-		if (strcmp(argv[i], "--host") == 0) {
-			pArgsOut->host = argv[i + 1];
-			++i;
-		}
-		else if (strcmp(argv[i], "--port") == 0) {
-			pArgsOut->port = atoi(argv[i + 1]);
-			++i;
-		}
-		else if (strcmp(argv[i], "--shell") == 0) {
-			pArgsOut->shell = true;
-		}
-		else if (strcmp(argv[i], "--quiet") == 0) {
-			pArgsOut->quiet = true;
-		}
-		else if (findDb && !std::strstr(argv[i], ".lua")) {
-			pArgsOut->database = argv[i];
-		}
-		else if (std::strstr(argv[i], ".lua")){
-			pArgsOut->files.push_back(argv[i]);
-		}
-	}
-}
+using std::string;
 
-CliArgs::CliArgs() {
-	host = "localhost";
-	port = 27017;
-	database = "";
-	shell = false;
-	quiet = false;
+CliArgs::CliArgs(int argc, char* argv[]) {
+    const CliOpts opts(argc, argv);
+
+    database = "";
+    quiet = opts.hasOpt("quiet");
+    shell = opts.hasOpt("shell");
+    host = opts.hasOpt("host") ? opts.getOpt("host") : "localhost";
+    port = opts.hasOpt("port") ? atoi(opts.getOpt("port").c_str()) : 27017;
+
+    for (const string value : opts.getValues()) {
+        if (std::strstr(value.c_str(), ".lua")) {
+            files.push_back(value);
+        }
+        else if (database.empty()) {
+            database = value;
+        }
+    }
 }

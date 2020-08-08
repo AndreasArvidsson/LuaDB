@@ -1,10 +1,13 @@
 #include "LuaBsonTypes.h"
+#include <string>
 #include "mongoc.h"
 #include "Date.h"
 #include "LuaParserUtil.h"
 #include "libbson_b64_pton.h"
 #include <regex>
 #include <cmath>
+
+using std::string;
 
 #define BUFFER_SIZE 128
 #define OID_STR_SIZE 24
@@ -461,7 +464,7 @@ const time_t LuaBsonTypes::lua_readIsoDate(lua_State *L, const int index) {
 
 int LuaBsonTypes::lua_isoDateToString(lua_State *L) {
 	time_t value = lua_readIsoDate(L, 1);
-	String isoString = Date::toIsoString(value);
+	string isoString = Date::toIsoString(value);
 	char buf[BUFFER_SIZE];
 	size_t length = snprintf(buf, BUFFER_SIZE, "%s(\"%s\")", BSON_NAME_DATE_TIME, isoString.c_str());
 	lua_pushlstring(L, buf, length);
@@ -502,7 +505,7 @@ int LuaBsonTypes::lua_timestampToString(lua_State *L) {
 int LuaBsonTypes::lua_regExp(lua_State *L) {
 	const int count = lua_gettop(L);
 	const char *pRegExp;
-	String options;
+	string options;
 	size_t lengthRegexp, lengthOptions;
 	if (count > 0) {
 		pRegExp = luaL_validatelstring(L, 1, &lengthRegexp);
@@ -819,7 +822,7 @@ void LuaBsonTypes::lua_pushWriteResult(lua_State *L, const bson_t *pWR) {
 }
 
 int LuaBsonTypes::lua_writeResultToString(lua_State *L) {
-	String json;
+	string json;
 	LuaParserUtil::luaToJson(L, json, 1);
 	char buf[BUFFER_SIZE];
 	size_t length = snprintf(buf, BUFFER_SIZE, "%s(%s)", BSON_NAME_WRITE_RESULT, json.c_str());

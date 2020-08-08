@@ -175,4 +175,3 @@ assertEquals('/a/i', tojson(RegExp("a", "i")))
 --Write reulst
 --Binary / uuid
 --print(UUID('0123456789abcdeffedcba9876543210'))
-

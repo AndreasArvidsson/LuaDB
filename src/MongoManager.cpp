@@ -1,12 +1,14 @@
 #include "MongoManager.h"
 
+using std::string;
+
 #define BUFFER_SIZE 128
 
 /*************************************
 *************** STATIC ***************
 **************************************/
 
-String MongoManager::getUri(const String host, const int port) {
+string MongoManager::getUri(const string host, const int port) {
 	char uri[BUFFER_SIZE];
 	snprintf(uri, BUFFER_SIZE, "mongodb://%s:%d", host.c_str(), port);
 	return uri;
@@ -25,9 +27,9 @@ MongoManager::~MongoManager() {
 	mongoc_cleanup();
 }
 
-MongoDB* MongoManager::getDatabase(const String name) {
+MongoDB* MongoManager::getDatabase(const string name) {
 	if (_pClient) {
-		std::unordered_map<String, MongoDB*>::const_iterator found = _databases.find(name);
+		std::unordered_map<string, MongoDB*>::const_iterator found = _databases.find(name);
 		//Already have this DB.
 		if (found != _databases.end()) {
 			return found->second;
@@ -40,11 +42,11 @@ MongoDB* MongoManager::getDatabase(const String name) {
 	return nullptr;
 }
 
-const bool MongoManager::connect(const String host, const int port, bson_t *pReply, bson_error_t *pError) {
+const bool MongoManager::connect(const string host, const int port, bson_t *pReply, bson_error_t *pError) {
 	return connect(getUri(host, port), pReply, pError);
 }
 
-const bool MongoManager::connect(const String uri, bson_t *pReply, bson_error_t *pError) {
+const bool MongoManager::connect(const string uri, bson_t *pReply, bson_error_t *pError) {
 	//Clean old states first
 	destroyClient();
 	_uri = uri;
@@ -54,7 +56,7 @@ const bool MongoManager::connect(const String uri, bson_t *pReply, bson_error_t 
 	return mongoc_client_get_server_status(_pClient, nullptr, pReply, pError);
 }
 
-const bool MongoManager::getDatabaseNames(std::vector<String> &namesOut, bson_error_t *pError) {
+const bool MongoManager::getDatabaseNames(std::vector<string> &namesOut, bson_error_t *pError) {
 	char **strv;
 	if ((strv = mongoc_client_get_database_names(_pClient, pError))) {
 		for (int i = 0; strv[i]; i++) {

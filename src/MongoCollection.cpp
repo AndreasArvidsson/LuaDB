@@ -1,7 +1,9 @@
 #include "MongoCollection.h"
 #include "MongoDB.h"
 
-MongoCollection::MongoCollection(MongoDB *pMongoDB, const String name, mongoc_collection_t *pCollection) {
+using std::string;
+
+MongoCollection::MongoCollection(MongoDB *pMongoDB, const string& name, mongoc_collection_t *pCollection) {
 	_pMongoDB = pMongoDB;
 	_name = name;
 	_pCollection = pCollection;
@@ -11,11 +13,11 @@ MongoCollection::~MongoCollection() {
 	mongoc_collection_destroy(_pCollection);
 }
 
-String MongoCollection::getName() const {
+string MongoCollection::getName() const {
 	return _name;
 }
 
-String MongoCollection::getFullName() const {
+string MongoCollection::getFullName() const {
 	return _pMongoDB->getName() + "." + _name;
 }
 
@@ -47,7 +49,7 @@ const int64_t MongoCollection::count(const bson_t *pQuery, bson_error_t *pError)
 	return mongoc_collection_count(_pCollection, MONGOC_QUERY_NONE, pQuery, 0, 0, NULL, pError);
 }
 
-const bool MongoCollection::distinct(const String key, const bson_t *pQuery, bson_t *pReply, bson_error_t *pError) const {
+const bool MongoCollection::distinct(const string& key, const bson_t *pQuery, bson_t *pReply, bson_error_t *pError) const {
 	bson_t *pCommand = bson_new();
 	bson_append_utf8(pCommand, "distinct", 8, _name.c_str(), (int)_name.size());
 	bson_append_utf8(pCommand, "key", 3, key.c_str(), (int)key.size());

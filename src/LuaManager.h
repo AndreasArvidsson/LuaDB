@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "LuaDB.h"
 
 class MongoManager;
@@ -10,18 +11,18 @@ public:
 
 	MongoManager* getMongo() const;
 
-	void useDatabase(const String name);
+	void useDatabase(const std::string& name);
 
 	const bool isRunning();
 	void setIsRunning(bool isRunning);
 
-	void loadFile(const String &path);
-	void loadString(const String &str);
+	void loadFile(const std::string&path);
+	void loadString(const std::string&str);
 
 private:
 	static LuaManager *_pInstance;
 
-	std::unordered_map<String, LuaDB*> _databases;
+	std::unordered_map<std::string, LuaDB*> _databases;
 	MongoManager *_pMongo;
 	LuaDB *_pDB;
 	bool _isRunning;
@@ -30,10 +31,10 @@ private:
 	LuaManager();
 	~LuaManager();
 
-	LuaDB* getDatabase(const String name);
+	LuaDB* getDatabase(const std::string& name);
 	lua_State* createNewState();
 	void printError(lua_State *L);
-	void doLoadString(lua_State *L, const String &str);
+	void doLoadString(lua_State *L, const std::string& str);
 	
 	static const luaL_reg _bindFuncs[];
 	

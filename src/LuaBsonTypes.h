@@ -117,7 +117,7 @@ private:
 	static int lua_regExp(lua_State *L);
 	static int lua_regExpToString(lua_State *L);
 
-	static int lua_uuid(lua_State *L);
+	//static int lua_uuid(lua_State *L); TODO
 	static int lua_binaryToString(lua_State *L);
 
 	static int lua_nullToString(lua_State *L);

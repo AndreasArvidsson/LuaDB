@@ -1,23 +1,23 @@
 #pragma once
+#include <string>
 #include "mongoc.h"
-#include "String.h"
 
 class MongoDB;
 class MongoWriteResult;
 
 class MongoCollection {
 public:
-	MongoCollection(MongoDB *pMongoDB, const String name, mongoc_collection_t *pCollection);
+	MongoCollection(MongoDB *pMongoDB, const std::string& name, mongoc_collection_t *pCollection);
 	~MongoCollection();
 
-	String getName() const;
-	String getFullName() const;
+	std::string getName() const;
+	std::string getFullName() const;
 	MongoDB* getDatabase() const;
 
 	mongoc_cursor_t* find(const bson_t *pQuery, const bson_t *pProjection = nullptr) const;
 	mongoc_cursor_t* aggregate(const bson_t *pPipeline, const bson_t *pOptions = nullptr) const;
 	const int64_t count(const bson_t *pQuery, bson_error_t *pError) const;
-	const bool distinct(const String key, const bson_t *pQuery, bson_t *pReply, bson_error_t *pError = nullptr) const;
+	const bool distinct(const std::string& key, const bson_t *pQuery, bson_t *pReply, bson_error_t *pError = nullptr) const;
 	const bool insert(const bson_t *pDoc, bson_t *pWR = nullptr, bson_error_t *pError = nullptr) const;
 	const bool save(const bson_t *pDoc, bson_t *pWR = nullptr, bson_error_t *pError = nullptr) const;
 	const bool update(const bson_t *pQuery, const bson_t *pUpdate, const bson_t *pOptions= nullptr, bson_t *pWR = nullptr, bson_error_t *pError = nullptr) const;
@@ -32,7 +32,7 @@ public:
 
 private:
 	MongoDB *_pMongoDB;
-	String _name;
+	std::string _name;
 	mongoc_collection_t *_pCollection;
 };
 

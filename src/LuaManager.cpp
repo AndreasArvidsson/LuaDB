@@ -9,6 +9,8 @@
 #include "LuaArray.h"
 #include "LuaAssert.h"
 
+using std::string;
+
 /*************************************
 *************** STATIC ***************
 **************************************/
@@ -34,7 +36,7 @@ MongoManager* LuaManager::getMongo() const {
     return _pMongo;
 }
 
-void LuaManager::useDatabase(const String name) {
+void LuaManager::useDatabase(const string& name) {
     _pDB = getDatabase(name);
     if (_L) {
         //Register global db table
@@ -50,14 +52,12 @@ void LuaManager::setIsRunning(const bool isRunning) {
     _isRunning = isRunning;
 }
 
-void LuaManager::loadFile(const String& path) {
-    String str;
-    File file(path);
+void LuaManager::loadFile(const string& path) {
+    const File file(path);
     if (file.exists()) {
-        if (file.getData(&str)) {
-            if (str.size()) {
-                loadString(str.c_str());
-            }
+        string str;
+        if (file.getData(str) && str.size()) {
+            loadString(str);
         }
         else {
             printf("Error: Can't read from file '%s'\n", path.c_str());
@@ -68,7 +68,7 @@ void LuaManager::loadFile(const String& path) {
     }
 }
 
-void LuaManager::loadString(const String& str) {
+void LuaManager::loadString(const string& str) {
     if (!_L) {
         _L = createNewState();
     }
@@ -136,7 +136,7 @@ lua_State* LuaManager::createNewState() {
     return L;
 }
 
-void LuaManager::doLoadString(lua_State* L, const String& str) {
+void LuaManager::doLoadString(lua_State* L, const string& str) {
     if (luaL_loadstring(L, str.c_str())) {
         printError(L);
         return;
@@ -151,8 +151,8 @@ void LuaManager::printError(lua_State* L) {
     lua_pop(L, 1);
 }
 
-LuaDB* LuaManager::getDatabase(const String name) {
-    std::unordered_map<String, LuaDB*>::const_iterator found = _databases.find(name);
+LuaDB* LuaManager::getDatabase(const string& name) {
+    std::unordered_map<string, LuaDB*>::const_iterator found = _databases.find(name);
     //Already have this DB.
     if (found != _databases.end()) {
         return found->second;
@@ -220,7 +220,7 @@ int LuaManager::lua_print(lua_State* L) {
 
 int LuaManager::lua_printJson(lua_State* L) {
     bool pretty = lua_gettop(L) > 1 ? lua_toboolean(L, 2) : false;
-    String json;
+    string json;
     LuaParserUtil::luaToJson(L, json, 1, pretty);
     printf("%s\n", json.c_str());
     return 0;
@@ -228,7 +228,7 @@ int LuaManager::lua_printJson(lua_State* L) {
 
 int LuaManager::lua_toJson(lua_State* L) {
     bool pretty = lua_gettop(L) > 1 ? lua_toboolean(L, 2) : false;
-    String json;
+    string json;
     LuaParserUtil::luaToJson(L, json, 1, pretty);
     lua_pushlstring(L, json.c_str(), json.size());
     return 1;
@@ -245,7 +245,7 @@ int LuaManager::lua_exit(lua_State* L) {
 }
 
 int LuaManager::lua_showDatabases(lua_State* L) {
-    std::vector<String> names;
+    std::vector<string> names;
     bson_error_t error;
     if (!_pInstance->_pMongo->getDatabaseNames(names, &error)) {
         luaL_error(L, "Show databases failure: %s\n", error.message);
@@ -257,7 +257,7 @@ int LuaManager::lua_showDatabases(lua_State* L) {
 }
 
 int LuaManager::lua_getDatabaseNames(lua_State* L) {
-    std::vector<String> names;
+    std::vector<string> names;
     bson_error_t error;
     if (!_pInstance->_pMongo->getDatabaseNames(names, &error)) {
         luaL_error(L, "Get database names failure: %s\n", error.message);

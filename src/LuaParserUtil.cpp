@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "LuaBsonTypes.h"
 
+using std::string;
+
 /*************************************
 ************* LUA TO BSON ************
 **************************************/
@@ -226,7 +228,7 @@ void LuaParserUtil::luaObjectToBson(lua_State* L, bson_t* pBsonOut, const int in
 ************ LUA TO JSON *************
 **************************************/
 
-void LuaParserUtil::luaToJson(lua_State* L, String& jsonOut, const int index, const bool pretty, const int depth) {
+void LuaParserUtil::luaToJson(lua_State* L, string& jsonOut, const int index, const bool pretty, const int depth) {
     if (luaL_getmetafield(L, index, "__bson")) {
         int bsonType = (int)lua_tointeger(L, -1);
         lua_pop(L, 1);
@@ -286,8 +288,8 @@ void LuaParserUtil::luaToJson(lua_State* L, String& jsonOut, const int index, co
     }
 }
 
-void LuaParserUtil::luaDocumentToJson(lua_State* L, String& jsonOut, int index, const bool pretty, const int depth) {
-    String indent = pretty ? getIndent(depth) : "";
+void LuaParserUtil::luaDocumentToJson(lua_State* L, string& jsonOut, int index, const bool pretty, const int depth) {
+    string indent = pretty ? getIndent(depth) : "";
     jsonOut += pretty ? "{\n" : "{ ";
     bool first = true;
     if (index < 0) {
@@ -312,8 +314,8 @@ void LuaParserUtil::luaDocumentToJson(lua_State* L, String& jsonOut, int index, 
     jsonOut += pretty ? "\n" + getIndent(depth - 1) + "}" : " }";
 }
 
-void LuaParserUtil::luaTableToJson(lua_State* L, String& jsonOut, int index, const bool pretty, const int depth) {
-    String indent = pretty ? getIndent(depth) : "";
+void LuaParserUtil::luaTableToJson(lua_State* L, string& jsonOut, int index, const bool pretty, const int depth) {
+    string indent = pretty ? getIndent(depth) : "";
     jsonOut += pretty ? "{\n" : "{ ";
     bool first = true;
     if (index < 0) {
@@ -338,8 +340,8 @@ void LuaParserUtil::luaTableToJson(lua_State* L, String& jsonOut, int index, con
     jsonOut += pretty ? "\n" + getIndent(depth - 1) + "}" : " }";
 }
 
-void LuaParserUtil::luaArrayToJson(lua_State* L, String& jsonOut, int index, const bool pretty, const int depth) {
-    String indent = pretty ? getIndent(depth) : "";
+void LuaParserUtil::luaArrayToJson(lua_State* L, string& jsonOut, int index, const bool pretty, const int depth) {
+    string indent = pretty ? getIndent(depth) : "";
     jsonOut += pretty ? "[\n" : "[ ";
     bool first = true;
     if (index < 0) {
@@ -361,8 +363,8 @@ void LuaParserUtil::luaArrayToJson(lua_State* L, String& jsonOut, int index, con
     jsonOut += pretty ? "\n" + getIndent(depth - 1) + "]" : " ]";
 }
 
-const String LuaParserUtil::getIndent(int numIndents) {
-    String str;
+const string LuaParserUtil::getIndent(int numIndents) {
+    string str;
     while (numIndents--) {
         str += "    ";
     }

@@ -1,6 +1,5 @@
 #pragma once
 #include "Lua.hpp"
-#include "String.h"
 
 class MongoCollection;
 
@@ -39,5 +38,3 @@ private:
 
 	static int lua_createTestData(lua_State *L);
 };
-
-
