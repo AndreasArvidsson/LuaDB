@@ -1,5 +1,3 @@
--- ./x64/Release/LuaMongo.exe test ../test/performance.lua
-
 local coll = db:getCollection("test")
 local size = 100000
 

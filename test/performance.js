@@ -1,5 +1,3 @@
-// ./mongo.exe test ~/Dropbox/programming/c++/LuaMongo/test/performance.js
-
 const coll = db.getCollection("test");
 const size = 100000;
 
