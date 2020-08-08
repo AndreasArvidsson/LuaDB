@@ -15,6 +15,9 @@ void CliArgs::parse(int argc, char* argv[], CliArgs *pArgsOut) {
 		else if (strcmp(argv[i], "--shell") == 0) {
 			pArgsOut->shell = true;
 		}
+		else if (strcmp(argv[i], "--quiet") == 0) {
+			pArgsOut->quiet = true;
+		}
 		else if (findDb && !std::strstr(argv[i], ".lua")) {
 			pArgsOut->database = argv[i];
 		}
@@ -29,4 +32,5 @@ CliArgs::CliArgs() {
 	port = 27017;
 	database = "";
 	shell = false;
+	quiet = false;
 }

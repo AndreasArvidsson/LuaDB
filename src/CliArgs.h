@@ -7,7 +7,7 @@ public:
 	String host, database;
 	int port;
 	std::vector<String> files;
-	bool shell;
+	bool shell, quiet;
 
 	static void parse(int argc, char* argv[], CliArgs *pArgsOut);
 

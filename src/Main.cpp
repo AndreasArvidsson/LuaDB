@@ -3,7 +3,6 @@
 #include "MongoManager.h"
 #include "CliArgs.h"
 #include <iostream> //getline
-//#include <conio.h> //_kbhit
 
 #define LUA_DB_VERSION "0.1.0.0"
 
@@ -14,12 +13,14 @@ int run(int argc, char* argv[]) {
 
     args.database = "test";
 
-    printf("LuaDB shell version: %s\n", LUA_DB_VERSION);
-    if (args.database.size()) {
-        printf("Connecting to : %s/%s\n", uri.c_str(), args.database.c_str());
-    }
-    else {
-        printf("Connecting to : %s\n", uri.c_str());
+    if (!args.quiet) {
+        printf("LuaDB shell version: %s\n", LUA_DB_VERSION);
+        if (args.database.size()) {
+            printf("Connecting to: %s/%s\n", uri.c_str(), args.database.c_str());
+        }
+        else {
+            printf("Connecting to: %s\n", uri.c_str());
+        }
     }
 
     LuaManager* pLua = LuaManager::getInstance();
@@ -30,11 +31,13 @@ int run(int argc, char* argv[]) {
         return -1;
     }
 
-    bson_iter_t it;
-    if (bson_iter_init_find(&it, &reply, "version")) {
-        printf("MongoDB server version: %s\n", bson_iter_utf8(&it, nullptr));
+    if (!args.quiet) {
+        bson_iter_t it;
+        if (bson_iter_init_find(&it, &reply, "version")) {
+            printf("MongoDB server version: %s\n", bson_iter_utf8(&it, nullptr));
+        }
+        bson_destroy(&reply);
     }
-    bson_destroy(&reply);
 
     if (args.database.size()) {
         pLua->useDatabase(args.database);
@@ -45,42 +48,32 @@ int run(int argc, char* argv[]) {
     //	pLua->loadFile("../test/test_crud.lua");
         //pLua->loadFile("../test/performance.lua");
 
-    //    fflush(stdout);
-
-
     if (args.files.size()) {
-
- /*       printf("111111");
-        fflush(stdout);*/
-
         for (int i = 0; i < args.files.size(); ++i) {
-            printf("\nLoading file: %s\n\n", args.files[i].c_str());
+            if (!args.quiet) {
+                printf("\nLoading file: %s\n\n", args.files[i].c_str());
+            }
             pLua->loadFile(args.files[i]);
         }
-
-     /*   printf("222222");
-        fflush(stdout);*/
-
-        if (args.shell) {
+        if (!args.quiet && args.shell) {
             printf("\n");
-            //fflush(stdout);
         }
         pLua->setIsRunning(args.shell);
     }
 
     if (pLua->isRunning()) {
-        printf("Type \"help()\" for help\n");
+        if (!args.quiet) {
+            printf("Type \"help()\" for help\n");
+        }
         while (pLua->isRunning()) {
-            printf("> ");
+            if (!args.quiet) {
+                printf("> ");
+                fflush(stdout);
+            }
             String commandStr;
             String inputStr;
             if (std::getline(std::cin, inputStr)) {
                 commandStr += inputStr;
-                //				while (_kbhit()) {
-                //					printf("... ");
-                //					std::getline(std::cin, inputStr);
-                //					commandStr += inputStr + "\n";
-                //				}
             }
             if (!commandStr.empty()) {
                 pLua->loadString(commandStr.c_str());
