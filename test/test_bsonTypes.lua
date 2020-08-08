@@ -1,5 +1,5 @@
 
-print("Test BSON types")
+print("Test BSON types\n")
 
 -- DOCUMENT
 

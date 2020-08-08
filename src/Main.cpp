@@ -11,6 +11,7 @@ int run(int argc, char* argv[]) {
     CliArgs::parse(argc, argv, &args);
     const String uri = MongoManager::getUri(args.host, args.port);
 
+    //TODO
     args.database = "test";
 
     if (!args.quiet) {
@@ -43,10 +44,14 @@ int run(int argc, char* argv[]) {
         pLua->useDatabase(args.database);
     }
 
-
-    //	pLua->loadFile("../test/test_bsonTypes.lua");
+    //TODO
+    pLua->loadFile("../test/test_bsonTypes.lua");
+    pLua->loadFile("../test/test_printTypes.lua");
     //	pLua->loadFile("../test/test_crud.lua");
         //pLua->loadFile("../test/performance.lua");
+
+    
+    
 
     if (args.files.size()) {
         for (int i = 0; i < args.files.size(); ++i) {

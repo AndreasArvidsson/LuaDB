@@ -10,6 +10,7 @@ public:
 	static void bsonToLua(const bson_t *bsonIn, lua_State *L);
 	static void bsonToLuaTable(const bson_t *bsonIn, lua_State *L);
 	static void bsonSubToLua(const bson_t *bsonIn, lua_State *L, const char *field);
+	static void printLua(lua_State* L, const int index);
 
 private:
 	static void luaTableToBson(lua_State *L, bson_t *pBsonOut, int index);

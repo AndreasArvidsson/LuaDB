@@ -179,6 +179,7 @@
     <None Include="..\test\performance.lua" />
     <None Include="..\test\test_bsonTypes.lua" />
     <None Include="..\test\test_crud.lua" />
+    <None Include="..\test\test_printTypes.lua" />
     <None Include="..\test\tmp.js" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
