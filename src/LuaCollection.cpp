@@ -109,7 +109,7 @@ int LuaCollection::lua_renameCollection(lua_State *L) {
 }
 
 int LuaCollection::lua_find(lua_State *L) {
-	int count = lua_gettop(L);
+	const int count = lua_gettop(L);
 	LuaCollection *pCollection = lua_get(L, 1);
 	bson_t *pProjection, *pQuery = bson_new();
 	if (count > 1) {
@@ -136,7 +136,7 @@ int LuaCollection::lua_find(lua_State *L) {
 }
 
 int LuaCollection::lua_findOne(lua_State *L) {
-	int count = lua_gettop(L);
+	const int count = lua_gettop(L);
 	LuaCollection *pCollection = lua_get(L, 1);
 	bson_t *pProjection, *pQuery = bson_new();
 	if (count > 1) {
